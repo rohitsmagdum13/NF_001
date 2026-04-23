@@ -28,8 +28,7 @@ inbox/*
 !inbox/.gitkeep
 
 # Generated outputs
-outputs/
-!outputs/.gitkeep
+
 
 # IDEs
 .idea/
