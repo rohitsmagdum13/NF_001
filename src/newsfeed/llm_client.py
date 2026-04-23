@@ -245,10 +245,15 @@ class LLMClient:
         # boto3/botocore ship without py.typed, so the dynamic client is Any.
 
         if self._bedrock is None:
-            self._bedrock = boto3.client(
-                "bedrock-runtime",
-                region_name=self.settings.bedrock.region,
-            )
+            boto_kwargs: dict[str, Any] = {
+                "service_name": "bedrock-runtime",
+                "region_name": self.settings.bedrock.region,
+                "aws_access_key_id": self.settings.aws_access_key_id,
+                "aws_secret_access_key": self.settings.aws_secret_access_key,
+            }
+            if self.settings.aws_session_token:
+                boto_kwargs["aws_session_token"] = self.settings.aws_session_token
+            self._bedrock = boto3.client(**boto_kwargs)
 
         tool_spec = _pydantic_to_bedrock_tool(schema)
 

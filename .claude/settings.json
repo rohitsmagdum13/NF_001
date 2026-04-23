@@ -20,7 +20,13 @@
       "Bash(python -c \"import sqlite3; c=sqlite3.connect\\('data/pipeline.db'\\); r=c.execute\\('SELECT COUNT\\(*\\) FROM drafts'\\).fetchone\\(\\); print\\('Drafts count:', r[0]\\); rows=c.execute\\('SELECT id, section, jurisdiction, content_type, editor_decision FROM drafts LIMIT 5'\\).fetchall\\(\\); [print\\(row\\) for row in rows]; c.close\\(\\)\")",
       "Bash(streamlit run *)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8501/)",
-      "Bash(pkill -f \"streamlit run\")"
+      "Bash(pkill -f \"streamlit run\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(taskkill /F /IM streamlit.exe)",
+      "Bash(taskkill /F /FI \"WINDOWTITLE eq streamlit*\")",
+      "Bash(netstat -ano)",
+      "PowerShell(Stop-Process -Id 4256 -Force)",
+      "Bash(python -c \"import subprocess; subprocess.run\\(['taskkill', '/PID', '4256', '/F'], shell=True\\)\")"
     ],
     "additionalDirectories": [
       "c:\\Users\\ROHIT\\Work\\Office\\Hex_Proj\\NF_001\\src\\newsfeed",

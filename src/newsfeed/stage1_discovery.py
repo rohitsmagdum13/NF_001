@@ -72,6 +72,10 @@ _DATE_PATTERN = re.compile(
     r"|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+\d{1,2},?\s+\d{4})\b",
     re.IGNORECASE,
 )
+# Matches a 4-digit year inside a URL path segment, e.g. /news/2025/article-slug
+_URL_YEAR_RE = re.compile(r"/(\d{4})/")
+# Optional year+month, e.g. /news/2025/09/article
+_URL_YEAR_MONTH_RE = re.compile(r"/(\d{4})/(\d{2})/")
 
 # Selectors for article links in HTML listings (tried in order, first match used).
 # Deliberately excludes "li a[href]" — too broad, picks up all nav menu items.
@@ -132,6 +136,38 @@ def _parse_date(text: str | None) -> datetime | None:
         return None
     result: datetime | None = dateparser.parse(text, settings=_DATE_SETTINGS)
     return result
+
+
+def _date_from_url(url: str) -> datetime | None:
+    """Extract an approximate date from a URL path segment.
+
+    Handles three patterns (most precise first):
+      /2025/09/15/  → 2025-09-15
+      /2025/09/     → 2025-09-01
+      /2025/        → 2025-12-31  (use end-of-year so cutoff comparison is safe)
+
+    Returns None when no year-shaped segment is found, or the year is the
+    current calendar year (too coarse to tell if within lookback window).
+    """
+    current_year = _utcnow().year
+
+    m = _URL_YEAR_MONTH_RE.search(url)
+    if m:
+        year, month = int(m.group(1)), int(m.group(2))
+        if year != current_year and 2000 <= year <= current_year:
+            try:
+                return datetime(year, month, 1, tzinfo=UTC)
+            except ValueError:
+                pass
+
+    m2 = _URL_YEAR_RE.search(url)
+    if m2:
+        year = int(m2.group(1))
+        if year != current_year and 2000 <= year <= current_year:
+            # Use Dec 31 — guarantees the date is before any same-year cutoff
+            return datetime(year, 12, 31, tzinfo=UTC)
+
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -289,7 +325,7 @@ def _items_from_html(
             title = node.text(strip=True) or None
             if not title or len(title) < _MIN_TITLE_LEN:
                 continue
-            pub_date = _extract_date_near_node(node)
+            pub_date = _extract_date_near_node(node) or _date_from_url(url)
             date_missing = pub_date is None
             if pub_date and pub_date < cutoff:
                 continue
