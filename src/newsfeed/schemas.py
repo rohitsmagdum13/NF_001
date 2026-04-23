@@ -33,6 +33,10 @@ class SourceEntry(BaseModel):
     example_template: str | None = None
     requires_js: bool = False
     sublink_patterns: list[str] = Field(default_factory=list)
+    # Pre-extracted metadata for local files — populated by Stage 0 so Stage 1
+    # has fallbacks when the raw HTML/MD has poor or missing structure.
+    title_hint: str | None = None
+    pub_date_hint: str | None = None  # ISO 8601 date or datetime
 
 
 class ExampleTemplate(BaseModel):

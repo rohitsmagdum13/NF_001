@@ -53,9 +53,11 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import dateparser
 from loguru import logger
 from markdown_it import MarkdownIt
 from markdown_it.token import Token
+from selectolax.parser import HTMLParser
 
 from newsfeed.config import get_settings
 from newsfeed.schemas import ExampleTemplate, SourceEntry, SourceRegistry
@@ -299,65 +301,268 @@ def _hints_from_stem(
     return section, juris
 
 
-def _registry_from_local_articles(local_articles_path: Path, settings: object) -> SourceRegistry:
-    """Build a SourceRegistry by scanning .txt URL files in the local_articles folder."""
+def _entries_from_txt_file(
+    path: Path,
+    valid_sections: list[str],
+    valid_jurisdictions: list[str],
+) -> list[SourceEntry]:
+    """Parse a .txt file into one SourceEntry per URL."""
+    section_hint, juris_hint = _hints_from_stem(path.stem, valid_sections, valid_jurisdictions)
+    section = section_hint or valid_sections[0]
+    jurisdiction = juris_hint or valid_jurisdictions[0]
+
+    entries: list[SourceEntry] = []
+    for raw in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        for raw_url in _TXT_LINE_RE.findall(line):
+            url = raw_url.rstrip(".,;:)")
+            if not url:
+                continue
+            entries.append(
+                SourceEntry(
+                    source_id=_source_id(section, jurisdiction, url),
+                    source_type="url",
+                    url=url,
+                    section=section,
+                    jurisdiction=jurisdiction,
+                    source_label=path.stem,
+                )
+            )
+    return entries
+
+
+# --- Robust metadata extraction for messy local files ---
+
+_DATE_TEXT_RE = re.compile(
+    r"\b(\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+\d{4}"
+    r"|\d{4}-\d{2}-\d{2}"
+    r"|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+\d{1,2},?\s+\d{4})\b",
+    re.IGNORECASE,
+)
+_MD_HEADING_RE = re.compile(r"^\s*#{1,3}\s+(.+?)\s*$", re.MULTILINE)
+
+
+# Generic/placeholder titles sometimes left in <title> tags — skip these in favour
+# of structured metadata (og:title, h1) when available.
+_GENERIC_TITLES = frozenset({
+    "untitled page", "untitled", "home", "welcome", "page", "index",
+    "document", "new page", "no title", "error", "not found", "404",
+})
+
+
+def _is_generic_title(text: str) -> bool:
+    """True if text looks like a placeholder title rather than a real article title."""
+    return text.strip().lower() in _GENERIC_TITLES
+
+
+def _extract_html_title(tree: HTMLParser) -> str | None:
+    """Try multiple strategies to find a title in messy HTML.
+
+    Priority (most → least reliable):
+      1. <h1> (when present, the clearest signal of article title)
+      2. Open Graph / Twitter meta (CMS platforms set these for social sharing)
+      3. <title> (often truncated/generic; skipped if in the 'generic' blocklist)
+      4. <h2>
+    """
+    # 1. <h1>
+    for node in tree.css("h1"):
+        t = node.text(strip=True)
+        if t and len(t) >= 5:
+            return t
+    # 2. Open Graph / Twitter meta — preferred over <title> because CMS platforms
+    #    set these precisely for social sharing (accurate even when <title> is generic)
+    for sel in ('meta[property="og:title"]', 'meta[name="twitter:title"]'):
+        nodes = tree.css(sel)
+        if nodes:
+            content = (nodes[0].attrs or {}).get("content", "").strip()
+            if content and not _is_generic_title(content):
+                return content
+    # 3. <title> — only if non-generic
+    for node in tree.css("title"):
+        t = node.text(strip=True)
+        if t and len(t) >= 5 and not _is_generic_title(t):
+            return t
+    # 4. <h2> — fallback for pages missing h1
+    for node in tree.css("h2"):
+        t = node.text(strip=True)
+        if t and len(t) >= 5:
+            return t
+    return None
+
+
+def _extract_html_date(tree: HTMLParser, body_text: str) -> str | None:
+    """Try multiple strategies to find a publication date. Returns ISO string or None."""
+    # 1. <time datetime="...">
+    for node in tree.css("time[datetime]"):
+        raw = (node.attrs or {}).get("datetime", "").strip()
+        if raw:
+            parsed = dateparser.parse(raw)
+            if parsed:
+                return parsed.date().isoformat()
+    # 2. Meta tags used by CMS platforms
+    meta_selectors = (
+        'meta[property="article:published_time"]',
+        'meta[name="pubdate"]',
+        'meta[name="publishdate"]',
+        'meta[name="date"]',
+        'meta[itemprop="datePublished"]',
+    )
+    for sel in meta_selectors:
+        nodes = tree.css(sel)
+        if nodes:
+            content = (nodes[0].attrs or {}).get("content", "").strip()
+            parsed = dateparser.parse(content) if content else None
+            if parsed:
+                return parsed.date().isoformat()
+    # 3. First date-shaped text inside the first 2000 chars of visible body text
+    m = _DATE_TEXT_RE.search(body_text[:2000])
+    if m:
+        parsed = dateparser.parse(m.group(0))
+        if parsed:
+            return parsed.date().isoformat()
+    return None
+
+
+def _extract_md_title(text: str) -> str | None:
+    """First markdown heading (#, ##, ###) with meaningful text."""
+    for m in _MD_HEADING_RE.finditer(text):
+        title = m.group(1).strip()
+        if len(title) >= 5:
+            return title
+    # Fall back to first non-empty line
+    for line in text.splitlines():
+        stripped = line.strip().lstrip("#").strip()
+        if stripped and len(stripped) >= 5:
+            return stripped
+    return None
+
+
+def _parse_local_file_metadata(path: Path) -> tuple[str | None, str | None]:
+    """Return (title_hint, pub_date_hint) for a local .html/.htm/.md file.
+
+    Uses progressive fallbacks so messy or sparsely-structured files still
+    yield usable metadata. Logs a WARNING when nothing can be extracted.
+    """
+    suffix = path.suffix.lower()
+    try:
+        content = path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        logger.warning("local file read failed", path=str(path), error=str(exc))
+        return None, None
+
+    if not content.strip():
+        logger.warning("local file is empty", path=str(path))
+        return None, None
+
+    if suffix in (".html", ".htm"):
+        try:
+            tree = HTMLParser(content)
+        except Exception as exc:
+            logger.warning("HTML parse failed", path=str(path), error=str(exc))
+            return None, None
+        body_text = tree.body.text(separator=" ", strip=True) if tree.body else ""
+        title = _extract_html_title(tree)
+        pub_date = _extract_html_date(tree, body_text)
+    else:  # .md
+        title = _extract_md_title(content)
+        m = _DATE_TEXT_RE.search(content[:2000])
+        pub_date = (dateparser.parse(m.group(0)).date().isoformat() if m and dateparser.parse(m.group(0)) else None)
+
+    if title is None and pub_date is None:
+        logger.warning(
+            "local file has no extractable title or date — will flag for editor review",
+            path=str(path),
+        )
+    elif title is None:
+        logger.warning("local file missing title", path=str(path))
+    elif pub_date is None:
+        logger.warning("local file missing publication date", path=str(path))
+
+    return title, pub_date
+
+
+def _entry_from_local_file(
+    path: Path,
+    valid_sections: list[str],
+    valid_jurisdictions: list[str],
+) -> SourceEntry | None:
+    """Build a SourceEntry for a local .html/.htm/.md file with metadata hints."""
+    suffix = path.suffix.lower()
+    if suffix not in (".html", ".htm", ".md"):
+        return None
+
+    section_hint, juris_hint = _hints_from_stem(path.stem, valid_sections, valid_jurisdictions)
+    source_type = "html" if suffix in (".html", ".htm") else "md"
+    digest = hashlib.sha256(str(path).encode("utf-8")).hexdigest()[:10]
+
+    title_hint, pub_date_hint = _parse_local_file_metadata(path)
+
+    return SourceEntry(
+        source_id=f"local__{_slug(path.stem, 30)}__{digest}",
+        source_type=source_type,
+        local_path=str(path),
+        section=section_hint or valid_sections[0],
+        jurisdiction=juris_hint or valid_jurisdictions[0],
+        source_label=path.stem,
+        title_hint=title_hint,
+        pub_date_hint=pub_date_hint,
+    )
+
+
+def _entries_from_local_articles(
+    local_articles_path: Path,
+    settings: object,
+) -> list[SourceEntry]:
+    """Scan data/local_articles/ and return a flat list of SourceEntry.
+
+    Handles three file types:
+      * .txt  → one entry per URL line
+      * .html, .htm → single-article entry pointing at the file
+      * .md  → single-article entry pointing at the file
+    """
     if not local_articles_path.exists():
         logger.warning("local_articles folder not found", path=str(local_articles_path))
-        return SourceRegistry()
+        return []
 
     valid_sections: list[str] = settings.sections  # type: ignore[attr-defined]
     valid_jurisdictions: list[str] = settings.jurisdictions  # type: ignore[attr-defined]
 
-    txt_files = [
-        p for p in sorted(local_articles_path.iterdir())
-        if p.suffix.lower() == ".txt" and not p.name.upper().startswith("README")
-    ]
-    if not txt_files:
-        logger.warning("no .txt files in local_articles/", path=str(local_articles_path))
-        return SourceRegistry()
+    entries: list[SourceEntry] = []
+    for path in sorted(local_articles_path.iterdir()):
+        if path.name.upper().startswith("README"):
+            continue
+        suffix = path.suffix.lower()
 
-    sources: list[SourceEntry] = []
-    for path in txt_files:
-        section_hint, juris_hint = _hints_from_stem(path.stem, valid_sections, valid_jurisdictions)
-        for raw in path.read_text(encoding="utf-8", errors="replace").splitlines():
-            line = raw.strip()
-            if not line or line.startswith("#"):
-                continue
-            for raw_url in _TXT_LINE_RE.findall(line):
-                url = raw_url.rstrip(".,;:)")
-                if not url:
-                    continue
-                sources.append(
-                    SourceEntry(
-                        source_id=_source_id(
-                            section_hint or valid_sections[0],
-                            juris_hint or valid_jurisdictions[0],
-                            url,
-                        ),
-                        source_type="url",
-                        url=url,
-                        section=section_hint or valid_sections[0],
-                        jurisdiction=juris_hint or valid_jurisdictions[0],
-                        source_label=path.stem,
-                    )
-                )
+        if suffix == ".txt":
+            entries.extend(_entries_from_txt_file(path, valid_sections, valid_jurisdictions))
+        elif suffix in (".html", ".htm", ".md"):
+            entry = _entry_from_local_file(path, valid_sections, valid_jurisdictions)
+            if entry:
+                entries.append(entry)
 
     logger.info(
-        "built registry from local_articles/",
-        sources=len(sources),
+        "scanned local_articles/",
+        entries=len(entries),
         folder=str(local_articles_path),
     )
-    return SourceRegistry(sources=sources)
+    return entries
+
+
 
 
 def run(
     template_path: Path | None = None,
     output_path: Path | None = None,
 ) -> dict[str, int]:
-    """Entry point: parse template → write ``source_registry.json``.
+    """Entry point: build ``source_registry.json`` from all inputs.
 
-    Falls back to scanning ``data/local_articles/`` when the template is absent.
-    Returns a counts dict: ``{"sources": N, "examples": M}``.
+    Always merges two sources:
+      * Template file (if present) — URL registry from Water_Newsfeed_Template.md
+      * Local articles folder — .txt URL lists + .html/.htm/.md article files
+
+    Returns ``{"sources": N, "examples": M, "local": L}``.
     """
     settings = get_settings()
     template_path = template_path or (settings.paths.reference / "Water_Newsfeed_Template.md")
@@ -367,17 +572,34 @@ def run(
         registry = parse_template(template_path)
     else:
         logger.warning(
-            "template not found — building registry from local_articles/ instead",
+            "template not found — registry will only include local_articles entries",
             template=str(template_path),
         )
-        registry = _registry_from_local_articles(settings.paths.local_articles, settings)
+        registry = SourceRegistry()
+
+    # Always merge in local_articles/ entries (.txt URLs + .html/.md files)
+    local_entries = _entries_from_local_articles(settings.paths.local_articles, settings)
+    if local_entries:
+        existing_keys: set[tuple[str, str, str]] = {
+            (s.section, s.jurisdiction, s.url or s.local_path or "")
+            for s in registry.sources
+        }
+        for entry in local_entries:
+            key = (entry.section, entry.jurisdiction, entry.url or entry.local_path or "")
+            if key not in existing_keys:
+                registry.sources.append(entry)
+                existing_keys.add(key)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
         json.dumps(registry.model_dump(), indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
-    counts = {"sources": len(registry.sources), "examples": len(registry.examples)}
+    counts = {
+        "sources": len(registry.sources),
+        "examples": len(registry.examples),
+        "local": len(local_entries),
+    }
     logger.info("wrote source registry", path=str(output_path), **counts)
     return counts
 

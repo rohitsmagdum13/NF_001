@@ -1,27 +1,33 @@
 Source URL: {{ source_url or "(local file)" }}
-Section: {{ section }}
-Jurisdiction: {{ jurisdiction }}
+Jurisdiction hint: {{ jurisdiction }}
+Section hint (may be wrong — a later stage re-classifies): {{ section }}
 
 --- ARTICLE TEXT (truncated to {{ article_text | length }} chars) ---
 {{ article_text }}
 --- END ---
 
-Is this article relevant to the **{{ section }}** section of an Australian water sector
-regulatory newsfeed for the **{{ jurisdiction }}** jurisdiction?
+Task: decide whether this article belongs anywhere in an **Australian water sector
+regulatory newsfeed**. A later stage will assign the correct section — your job
+here is ONLY the binary relevance gate, not section fit.
 
-Relevant content includes:
-- New or amended legislation, regulations, or water plans
-- Government announcements, policy decisions, consultation papers
-- Water authority reports, gazette notices, licence decisions
-- Media releases about water management, infrastructure, or reform
+Mark RELEVANT if the article covers ANY of these topics (regardless of section):
+- Legislation, regulations, Acts, or water plans (new, amended, or under review)
+- Government announcements, policy decisions, consultations, or compliance obligations
+- Water authority reports, gazette notices, licences, or approvals
+- Media releases about water management, supply, quality, conservation, or infrastructure
+- Public safety, environmental, or operational alerts relating to water
+  (e.g. algal bloom warnings, dam spills, water restrictions)
+- Research, monitoring programs, or data releases about water resources
+- Community engagement, consultations, or education programs run by water authorities
 
-NOT relevant:
+Mark NOT RELEVANT only if the article is clearly one of:
 - Job listings or procurement notices unrelated to water policy
-- General infrastructure news with no regulatory or policy dimension
+- Corporate news with no water-management dimension (e.g. executive biographies,
+  office moves, generic business awards)
 - Content from non-Australian jurisdictions (unless it affects Australian law)
 - Duplicate coverage of the same event already noted above
 
-When in doubt, mark as relevant — editors will make the final call.
+Default to RELEVANT when uncertain — editors make the final call.
 
 Respond with JSON only — no markdown fences, no extra keys:
 {"relevant": true, "reason": "<one concise sentence>"}

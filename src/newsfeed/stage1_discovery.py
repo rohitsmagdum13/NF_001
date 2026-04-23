@@ -380,180 +380,6 @@ def _items_from_html(
 # Local-file discovery
 # ---------------------------------------------------------------------------
 
-_FILENAME_HINT_RE = re.compile(r"^([^_].+?)__([^_].+?)__(.+)$")
-
-
-def _hints_from_filename(
-    stem: str,
-    valid_sections: list[str],
-    valid_jurisdictions: list[str],
-) -> tuple[str | None, str | None]:
-    """Try to extract section and jurisdiction from a filename stem.
-
-    Expects the pattern: <Section>__<Jurisdiction>__<title>
-    Underscores within a part are replaced with spaces for matching.
-    Returns (section, jurisdiction) or (None, None) if not matched.
-    """
-    m = _FILENAME_HINT_RE.match(stem)
-    if not m:
-        return None, None
-    raw_section = m.group(1).replace("_", " ").strip()
-    raw_juris = m.group(2).replace("_", " ").strip()
-    section = next((s for s in valid_sections if s.lower() == raw_section.lower()), None)
-    juris = next((j for j in valid_jurisdictions if j.lower() == raw_juris.lower()), None)
-    return section, juris
-
-
-def _urls_from_txt(path: Path) -> list[str]:
-    """Read a .txt file and return every line that looks like an http(s) URL.
-
-    Lines starting with # are treated as comments and ignored.
-    """
-    urls: list[str] = []
-    for raw in path.read_text(encoding="utf-8", errors="replace").splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#"):
-            continue
-        urls_in_line = _URL_LINE_RE.findall(line)
-        for u in urls_in_line:
-            cleaned = u.rstrip(".,;:)")
-            if cleaned:
-                urls.append(cleaned)
-    return urls
-
-
-async def _discover_txt_file(
-    path: Path,
-    client: httpx.AsyncClient,
-    sem: asyncio.Semaphore,
-    cutoff: datetime,
-    valid_sections: list[str],
-    valid_jurisdictions: list[str],
-) -> list[_DiscoveredItem]:
-    """Read URLs from a .txt file and run the full discovery chain on each."""
-    urls = _urls_from_txt(path)
-    if not urls:
-        logger.warning("local_articles: .txt file has no URLs", file=path.name)
-        return []
-
-    section_hint, juris_hint = _hints_from_filename(path.stem, valid_sections, valid_jurisdictions)
-
-    items: list[_DiscoveredItem] = []
-    for url in urls:
-        source = SourceEntry(
-            source_id=f"txt__{path.stem[:30]}__{hashlib.sha256(url.encode()).hexdigest()[:8]}",
-            source_type="url",
-            url=url,
-            section=section_hint or valid_sections[0],
-            jurisdiction=juris_hint or valid_jurisdictions[0],
-            source_label=path.stem,
-        )
-        logger.info("local_articles: discovering URL from .txt", file=path.name, url=url)
-        discovered = await _discover_url(source, client, sem, cutoff)
-        items.extend(discovered)
-        logger.info(
-            "local_articles: .txt URL done",
-            url=url,
-            candidates=len(discovered),
-        )
-
-    return items
-
-
-async def _scan_local_articles_folder_async(
-    folder: Path,
-    client: httpx.AsyncClient,
-    sem: asyncio.Semaphore,
-    cutoff: datetime,
-    valid_sections: list[str],
-    valid_jurisdictions: list[str],
-) -> list[_DiscoveredItem]:
-    """Scan local_articles/ for .html/.md files.
-
-    .txt URL files are intentionally skipped here — Stage 0 reads them and
-    writes their URLs into source_registry.json, so Stage 1 processes those
-    URLs through the normal registry URL-discovery path.
-    """
-    items: list[_DiscoveredItem] = []
-    if not folder.exists():
-        return items
-
-    for path in sorted(folder.iterdir()):
-        suffix = path.suffix.lower()
-
-        if suffix in (".html", ".htm", ".md"):
-            section_hint, juris_hint = _hints_from_filename(
-                path.stem, valid_sections, valid_jurisdictions
-            )
-            source = SourceEntry(
-                source_id=f"local__{path.stem[:40]}",
-                source_type="html" if suffix in (".html", ".htm") else "md",
-                local_path=str(path),
-                section=section_hint or valid_sections[0],
-                jurisdiction=juris_hint or valid_jurisdictions[0],
-                source_label="Local",
-            )
-            discovered = (
-                _discover_local_html(source, cutoff)
-                if suffix in (".html", ".htm")
-                else _discover_local_md(source, cutoff)
-            )
-            if discovered:
-                items.extend(discovered)
-                logger.info(
-                    "local_articles: found file",
-                    file=path.name,
-                    section_hint=section_hint,
-                    jurisdiction_hint=juris_hint,
-                )
-
-    return items
-
-
-def _scan_local_articles_folder(
-    folder: Path,
-    cutoff: datetime,
-    valid_sections: list[str],
-    valid_jurisdictions: list[str],
-) -> list[_DiscoveredItem]:
-    """Sync wrapper kept for unit-test compatibility (.html/.md only)."""
-    items: list[_DiscoveredItem] = []
-    if not folder.exists():
-        return items
-
-    for path in sorted(folder.iterdir()):
-        suffix = path.suffix.lower()
-        if suffix not in (".html", ".htm", ".md"):
-            continue
-
-        section_hint, juris_hint = _hints_from_filename(
-            path.stem, valid_sections, valid_jurisdictions
-        )
-        source = SourceEntry(
-            source_id=f"local__{path.stem[:40]}",
-            source_type="html" if suffix in (".html", ".htm") else "md",
-            local_path=str(path),
-            section=section_hint or valid_sections[0],
-            jurisdiction=juris_hint or valid_jurisdictions[0],
-            source_label="Local",
-        )
-        discovered = (
-            _discover_local_html(source, cutoff)
-            if suffix in (".html", ".htm")
-            else _discover_local_md(source, cutoff)
-        )
-        if discovered:
-            items.extend(discovered)
-            logger.info(
-                "local_articles: found file",
-                file=path.name,
-                section_hint=section_hint,
-                jurisdiction_hint=juris_hint,
-            )
-
-    return items
-
-
 def _discover_local_html(source: SourceEntry, cutoff: datetime) -> list[_DiscoveredItem]:
     """Local .html file treated as a single article source."""
     if not source.local_path:
@@ -565,20 +391,29 @@ def _discover_local_html(source: SourceEntry, cutoff: datetime) -> list[_Discove
         return []
     html_text = path.read_text(encoding="utf-8", errors="replace")
     tree = HTMLParser(html_text)
-    title: str | None = None
-    for sel in ("h1", "h2", "title"):
-        nodes = tree.css(sel)
-        if nodes:
-            t = nodes[0].text(strip=True)
-            if t:
-                title = t
-                break
+
+    # Prefer Stage 0's pre-extracted hints — it already ran a robust multi-strategy
+    # extraction (og:title > h1 > title > h2, skipping generic titles). Only
+    # re-parse here if the hint is missing.
+    title: str | None = source.title_hint
+    if not title:
+        for sel in ("h1", "h2", "title"):
+            nodes = tree.css(sel)
+            if nodes:
+                t = nodes[0].text(strip=True)
+                if t:
+                    title = t
+                    break
+
     pub_date: datetime | None = None
-    for t_node in tree.css("time[datetime]"):
-        dt_str = cast(dict[str, str], t_node.attrs or {}).get("datetime") or ""
-        pub_date = _parse_date(dt_str)
-        if pub_date:
-            break
+    if source.pub_date_hint:
+        pub_date = _parse_date(source.pub_date_hint)
+    if pub_date is None:
+        for t_node in tree.css("time[datetime]"):
+            dt_str = cast(dict[str, str], t_node.attrs or {}).get("datetime") or ""
+            pub_date = _parse_date(dt_str)
+            if pub_date:
+                break
     if pub_date and pub_date < cutoff:
         logger.info("local HTML too old, skipping", path=str(path))
         return []
@@ -603,16 +438,23 @@ def _discover_local_md(source: SourceEntry, cutoff: datetime) -> list[_Discovere
         logger.warning("local file not found", path=str(path), source_id=source.source_id)
         return []
     text = path.read_text(encoding="utf-8", errors="replace")
-    title: str | None = None
-    for line in text.splitlines():
-        stripped = line.strip().lstrip("#").strip()
-        if stripped:
-            title = stripped
-            break
+
+    # Prefer Stage 0's pre-extracted hints (already robust).
+    title: str | None = source.title_hint
+    if not title:
+        for line in text.splitlines():
+            stripped = line.strip().lstrip("#").strip()
+            if stripped:
+                title = stripped
+                break
+
     pub_date: datetime | None = None
-    m = _DATE_PATTERN.search(text[:500])
-    if m:
-        pub_date = _parse_date(m.group(0))
+    if source.pub_date_hint:
+        pub_date = _parse_date(source.pub_date_hint)
+    if pub_date is None:
+        m = _DATE_PATTERN.search(text[:500])
+        if m:
+            pub_date = _parse_date(m.group(0))
     if pub_date and pub_date < cutoff:
         logger.info("local MD too old, skipping", path=str(path))
         return []
@@ -926,19 +768,6 @@ async def discover_all(
     async with httpx.AsyncClient(headers=headers, timeout=timeout) as client:
         tasks = [_discover_url(s, client, sem, cutoff) for s in url_sources]
         results = await asyncio.gather(*tasks, return_exceptions=True)
-
-        # local_articles folder — .txt files need HTTP client (async)
-        local_folder = settings.paths.local_articles
-        try:
-            local_async_items = await _scan_local_articles_folder_async(
-                local_folder, client, sem, cutoff, settings.sections, settings.jurisdictions
-            )
-            if local_async_items:
-                logger.info("local_articles: total discovered", count=len(local_async_items))
-            all_items.extend(local_async_items)
-        except Exception as exc:
-            logger.error("local_articles folder error", error=str(exc))
-            error_count += 1
 
     for source, result in zip(url_sources, results, strict=True):
         if isinstance(result, Exception):

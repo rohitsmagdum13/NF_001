@@ -27,7 +27,9 @@
       "Bash(netstat -ano)",
       "PowerShell(Stop-Process -Id 4256 -Force)",
       "Bash(python -c \"import subprocess; subprocess.run\\(['taskkill', '/PID', '4256', '/F'], shell=True\\)\")",
-      "Bash(python scripts/list_bedrock_models.py)"
+      "Bash(python scripts/list_bedrock_models.py)",
+      "Bash(python -m newsfeed.stage0_parse_template)",
+      "Bash(python -m newsfeed.stage1_discovery)"
     ],
     "additionalDirectories": [
       "c:\\Users\\ROHIT\\Work\\Office\\Hex_Proj\\NF_001\\src\\newsfeed",
