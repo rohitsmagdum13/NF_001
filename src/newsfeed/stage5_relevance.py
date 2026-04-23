@@ -124,7 +124,7 @@ def _check_one(
         result = llm.complete(
             prompt=prompt,
             schema=RelevanceResult,
-            model_tier="cheap",
+            model_tier="quality",
             system=_SYSTEM_PROMPT,
             stage="stage5_relevance",
             candidate_id=candidate.id,
