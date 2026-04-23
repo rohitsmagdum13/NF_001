@@ -100,7 +100,13 @@ def run(
         )
 
     if not rows:
-        logger.info("assemble: no validated candidates")
+        logger.info("assemble: no validated candidates — writing empty payload")
+        out_dir.mkdir(parents=True, exist_ok=True)
+        payload_path = out_dir / "horizon_payload.json"
+        payload_path.write_text(
+            AssembledNewsfeed(run_date=today, sections=[]).model_dump_json(indent=2),
+            encoding="utf-8",
+        )
         return {"assembled": 0, "sections": 0, "skipped": 0}
 
     logger.info("assemble start", candidates=len(rows))
