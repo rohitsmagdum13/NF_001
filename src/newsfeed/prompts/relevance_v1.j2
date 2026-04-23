@@ -1,0 +1,25 @@
+Source URL: {{ source_url or "(local file)" }}
+Section: {{ section }}
+Jurisdiction: {{ jurisdiction }}
+
+--- ARTICLE TEXT (truncated to {{ article_text | length }} chars) ---
+{{ article_text }}
+--- END ---
+
+Is this article relevant to the **{{ section }}** section of an Australian water sector
+regulatory newsfeed for the **{{ jurisdiction }}** jurisdiction?
+
+Relevant content includes:
+- New or amended legislation, regulations, or water plans
+- Government announcements, policy decisions, consultation papers
+- Water authority reports, gazette notices, licence decisions
+- Media releases about water management, infrastructure, or reform
+
+NOT relevant:
+- Job listings or procurement notices unrelated to water policy
+- General infrastructure news with no regulatory or policy dimension
+- Content from non-Australian jurisdictions (unless it affects Australian law)
+- Duplicate coverage of the same event already noted above
+
+Respond with JSON only — no markdown fences, no extra keys:
+{"relevant": true, "reason": "<one concise sentence>"}

@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv --version)",
+      "Bash(uv sync *)",
+      "Bash(uv run *)",
+      "Bash(dir \"c:\\\\Users\\\\ROHIT\\\\Work\\\\Office\\\\Hex_Proj\\\\NF_001\\\\src\\\\newsfeed\")",
+      "Bash(dir \"c:\\\\Users\\\\ROHIT\\\\Work\\\\Office\\\\Hex_Proj\\\\NF_001\\\\src\\\\newsfeed\\\\prompts\")",
+      "Bash(ls data/)",
+      "Bash(ls .env)",
+      "Bash(sqlite3 data/pipeline.db \"SELECT status, COUNT\\(*\\) FROM candidates GROUP BY status;\")",
+      "Bash(taskkill /F /IM python.exe /T)",
+      "Bash(pkill -f \"stage5_relevance\")",
+      "Bash(grep -E \"\\(classify start|classified$|classify complete|ERROR\\)\")",
+      "Bash(grep -E \"\\(draft start|drafted$|draft complete|ERROR\\)\")",
+      "Bash(python -c \"import json; data = json.loads\\(open\\('c:/Users/ROHIT/Work/Office/Hex_Proj/NF_001/data/source_registry.json', encoding='utf-8'\\).read\\(\\)\\); print\\(type\\(data\\), list\\(data.keys\\(\\)\\) if isinstance\\(data, dict\\) else 'not dict'\\)\")",
+      "Bash(python -c ' *)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\ROHIT\\Work\\Office\\Hex_Proj\\NF_001\\src\\newsfeed"
+    ]
+  }
+}

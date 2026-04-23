@@ -1,0 +1,53 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+venv/
+
+# Secrets & local config
+.env
+.env.*
+!.env.example
+
+# Runtime state (never commit)
+data/pipeline.db
+data/pipeline.db-journal
+data/pipeline.db-wal
+data/pipeline.db-shm
+data/cache/
+data/source_registry.json
+
+# Editor drop zone
+inbox/*
+!inbox/.gitkeep
+
+# Generated outputs
+outputs/
+!outputs/.gitkeep
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Test / coverage artefacts
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

@@ -1,0 +1,30 @@
+Source hint — Section: {{ section_hint }}
+Source hint — Jurisdiction: {{ jurisdiction_hint }}
+
+--- ARTICLE TEXT (truncated to {{ article_text | length }} chars) ---
+{{ article_text }}
+--- END ---
+
+VALID SECTIONS (choose exactly one):
+{% for s in sections %}{{ loop.index }}. {{ s }}
+{% endfor %}
+VALID JURISDICTIONS (choose exactly one):
+{% for j in jurisdictions %}{{ loop.index }}. {{ j }}
+{% endfor %}
+VALID CONTENT TYPES (choose exactly one):
+- new_plan          → new or amended legislation, water plans, or regulatory instruments
+- media_release     → agency media release containing a spokesperson quote
+- weekly_report     → periodic monitoring, flow, or compliance report
+- bullet_list       → multiple short releases grouped under one agency header
+- simple_update     → single brief advisory or information notice (no extended quote)
+- gazette_bundle    → collection of gazette notices grouped under one act
+{% if examples %}
+EXAMPLE DRAFTS for format guidance only:
+{% for ex in examples %}
+[{{ ex.section }} / {{ ex.jurisdiction }}]
+{{ ex.body }}
+{% endfor %}
+{% endif %}
+Confidence is your certainty that this classification is correct (0.0 = uncertain, 1.0 = certain).
+Respond with JSON only — no markdown fences, no extra keys:
+{"section": "...", "jurisdiction": "...", "confidence": 0.85, "content_type": "..."}

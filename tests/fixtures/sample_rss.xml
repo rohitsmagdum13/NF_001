@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Example Regulator News</title>
+    <link>https://example.com/news</link>
+    <description>Latest regulatory news</description>
+    <item>
+      <title>New Water Policy Announced</title>
+      <link>https://example.com/news/water-policy-2024</link>
+      <pubDate>Mon, 15 Apr 2024 09:00:00 +0000</pubDate>
+      <description>Details of new water policy.</description>
+    </item>
+    <item>
+      <title>Water Reform Update</title>
+      <link>https://example.com/news/water-reform-update</link>
+      <pubDate>Fri, 05 Jan 2024 09:00:00 +0000</pubDate>
+      <description>An update on water reform.</description>
+    </item>
+    <item>
+      <title>Old Article Should Be Filtered</title>
+      <link>https://example.com/news/old-article</link>
+      <pubDate>Sun, 31 Dec 2023 09:00:00 +0000</pubDate>
+      <description>An old article that should be filtered out by lookback window.</description>
+    </item>
+    <item>
+      <title>Article With No Date</title>
+      <link>https://example.com/news/no-date-article</link>
+      <description>This article has no publication date and must be kept.</description>
+    </item>
+  </channel>
+</rss>

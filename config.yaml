@@ -1,0 +1,132 @@
+pipeline:
+  lookback_days: 21            # editable: 7, 14, 21, 28, ...
+  max_sublink_depth: 1
+  confidence_threshold: 0.7
+  cache_retention_days: 28
+  fetch_concurrency: 8
+  http_timeout_seconds: 15
+
+paths:
+  inbox: ./inbox
+  cache: ./data/cache
+  outputs: ./outputs
+  db: ./data/pipeline.db
+  source_registry: ./data/source_registry.json
+  reference: ./reference
+
+llm:
+  primary: openai
+  fallback: bedrock
+  timeout_seconds: 10
+  max_retries: 2
+
+bedrock:
+  region: ap-southeast-2
+  cheap_model: anthropic.claude-3-5-haiku-20241022-v1:0
+  quality_model: anthropic.claude-3-5-sonnet-20241022-v2:0
+
+openai:
+  cheap_model: gpt-4o-mini
+  quality_model: gpt-4o
+
+sections:
+  - Water Reform
+  - Urban Water Supply and Use
+  - Rural Water Supply and Use
+  - Wastewater and Water Reuse
+  - Collection
+  - Conservation
+  - Water Rights
+  - Waterways and Flood Mitigation
+  - General Water Quality and Sustainability
+
+jurisdictions:
+  - National
+  - Victoria
+  - New South Wales
+  - Queensland
+  - Western Australia
+  - South Australia
+  - Tasmania
+  - Australian Capital Territory
+  - Northern Territory
+
+# Known regulator / agency whitelist by jurisdiction.
+# LLM must pick from this list; free-form agency strings are rejected by Stage 8.
+agencies:
+  National:
+    - ABARES
+    - ACCC
+    - BoM
+    - DAWE
+    - DCCEEW
+    - MDBA
+    - National Water Grid Authority
+    - AWA
+  Victoria:
+    - Barwon Water
+    - Central Highlands Water
+    - City West Water
+    - Coliban Water
+    - DELWP
+    - DEECA
+    - East Gippsland Water
+    - ESC
+    - EWOV
+    - Gippsland Water
+    - GMW
+    - GWMWater
+    - Lower Murray Water
+    - Melbourne Water
+    - North East Water
+    - South East Water
+    - South Gippsland Water
+    - SRW
+    - VEWH
+    - Wannon Water
+    - Westernport Water
+    - Yarra Valley Water
+  New South Wales:
+    - DPIE
+    - DPE
+    - Hunter Water
+    - IPART
+    - Murrumbidgee Irrigation
+    - NSW Department of Primary Industries and Regional Development
+    - Sydney Water
+    - WaterNSW
+  Queensland:
+    - DNRM
+    - qld water
+    - Seqwater
+    - Sunwater
+    - Urban Utilities
+  Western Australia:
+    - DER
+    - DWER
+    - Water Corporation
+  South Australia:
+    - DEW
+    - ESCOSA
+    - SA Water
+    - WaterConnect
+  Tasmania:
+    - DPIPWE
+    - Economic Regulator (Tas)
+    - Tasmanian Irrigation
+    - TasWater
+  Australian Capital Territory:
+    - Icon Water
+  Northern Territory:
+    - DENR
+    - PowerWater
+    - Utilicom
+
+# Content types used by the 6 Jinja2 draft templates.
+content_types:
+  - new_plan
+  - media_release
+  - weekly_report
+  - bullet_list
+  - simple_update
+  - gazette_bundle

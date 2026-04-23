@@ -1,0 +1,30 @@
+You are drafting a regulatory newsfeed entry for the Australian water sector.
+
+Section: {{ section }}
+Jurisdiction: {{ jurisdiction }}
+Content type: {{ content_type }}
+
+--- ARTICLE TEXT ---
+{{ article_text }}
+--- END ARTICLE ---
+{% if sublinks_text %}
+
+--- SUPPLEMENTARY CONTENT ---
+{{ sublinks_text }}
+--- END SUPPLEMENTARY ---
+{% endif %}
+
+Use the following format template exactly. Replace each {SLOT} with facts taken from the
+article above. CRITICAL RULES:
+
+1. Any text enclosed in "[...]" quote marks MUST appear verbatim in the source article.
+2. Dates MUST appear verbatim in the source.
+3. Agency names MUST be real Australian water sector agencies found in the source.
+4. Do NOT invent any facts. If a required fact is missing from the source, write "(not stated)" for that slot.
+5. Produce exactly one entry — do not pad or add extra commentary.
+
+FORMAT TEMPLATE:
+{{ format_template }}
+
+Respond with JSON only — no markdown fences, no extra keys:
+{"draft_text": "..."}
