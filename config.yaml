@@ -5,6 +5,27 @@ pipeline:
   cache_retention_days: 28
   fetch_concurrency: 8
   http_timeout_seconds: 15
+  # Nav link text patterns that indicate a content listing page.
+  # Stage 1 scans <nav> for links whose text matches any of these (case-insensitive).
+  # Matched links are crawled as listing pages; unmatched nav links are ignored.
+  content_nav_patterns:
+    - news
+    - media release
+    - media-release
+    - media centre
+    - community update
+    - community news
+    - publication
+    - alert
+    - event
+    - consultation
+    - press release
+    - announcement
+    - newsroom
+    - bulletin
+    - update
+    - report
+    - notice
 
 paths:
   inbox: ./inbox

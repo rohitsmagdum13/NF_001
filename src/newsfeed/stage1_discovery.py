@@ -73,7 +73,8 @@ _DATE_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
-# Selectors for article links in HTML listings (tried in order, first match used)
+# Selectors for article links in HTML listings (tried in order, first match used).
+# Deliberately excludes "li a[href]" — too broad, picks up all nav menu items.
 _ARTICLE_LINK_SELECTORS = [
     "article a[href]",
     "h1 a[href]",
@@ -81,7 +82,9 @@ _ARTICLE_LINK_SELECTORS = [
     "h3 a[href]",
     ".news-item a[href]",
     ".post-title a[href]",
-    "li a[href]",
+    ".media-release a[href]",
+    ".listing-item a[href]",
+    ".entry-title a[href]",
 ]
 
 
@@ -218,51 +221,123 @@ def _extract_date_near_node(node: Any) -> datetime | None:
     return None
 
 
+# Nav/chrome containers whose links are always menus, never content.
+_NAV_SELECTORS = ("nav", "header", "footer", "aside", "[role='navigation']", "[role='banner']")
+
+# Candidate content-area selectors (tried in order; first that yields links wins).
+_CONTENT_AREA_SELECTORS = (
+    "main",
+    "[role='main']",
+    "#content",
+    "#main",
+    ".content",
+    ".main-content",
+    ".page-content",
+    ".post-content",
+    ".entry-content",
+    ".site-content",
+)
+
+
+def _nav_urls(tree: HTMLParser, base_url: str) -> set[str]:
+    """Collect all URLs that appear inside nav/header/footer/aside elements."""
+    urls: set[str] = set()
+    for sel in _NAV_SELECTORS:
+        for node in tree.css(f"{sel} a[href]"):
+            href = (cast(dict[str, str], node.attrs).get("href") or "").strip()
+            if href:
+                urls.add(urljoin(base_url, href))
+    return urls
+
+
 def _items_from_html(
     html_text: str,
     base_url: str,
     source: SourceEntry,
     cutoff: datetime,
 ) -> list[_DiscoveredItem]:
-    """Extract candidate article links from an HTML listing page."""
+    """Extract candidate article links from an HTML listing page.
+
+    Strategy (dynamic — works regardless of URL path structure):
+      1. Collect all URLs that live inside nav/header/footer/aside → mark as
+         navigation and exclude them from every subsequent pass.
+      2. Try known content-area selectors (main, #content, .content, …) to
+         find links in the page body only.
+      3. If no content-area selector matches, fall back to semantic article
+         selectors (article, h2 a, .news-item, …).
+      4. Last resort: all same-domain links minus the nav URLs.
+    """
     tree = HTMLParser(html_text)
     base_netloc = urlparse(base_url).netloc
+    nav_urls = _nav_urls(tree, base_url)
     seen: set[str] = set()
-    items: list[_DiscoveredItem] = []
 
-    candidates: list[Any] = []
-    for sel in _ARTICLE_LINK_SELECTORS:
-        candidates.extend(tree.css(sel))
-    if not candidates:
-        candidates = list(tree.css("a[href]"))
-
-    for node in candidates[:_MAX_HTML_LINKS]:
-        href = (cast(dict[str, str], node.attrs).get("href") or "").strip()
-        if not href or href.startswith("#") or href.startswith("javascript:"):
-            continue
-        url = urljoin(base_url, href)
-        if urlparse(url).netloc != base_netloc:
-            continue
-        if url in seen:
-            continue
-        seen.add(url)
-        title = node.text(strip=True) or None
-        if not title or len(title) < _MIN_TITLE_LEN:
-            continue
-        pub_date = _extract_date_near_node(node)
-        date_missing = pub_date is None
-        if pub_date and pub_date < cutoff:
-            continue
-        items.append(
-            _DiscoveredItem(
-                url=url,
-                title=title,
-                pub_date=pub_date,
-                date_missing=date_missing,
-                source=source,
+    def _collect(nodes: list[Any]) -> list[_DiscoveredItem]:
+        result: list[_DiscoveredItem] = []
+        for node in nodes[:_MAX_HTML_LINKS]:
+            href = (cast(dict[str, str], node.attrs).get("href") or "").strip()
+            if not href or href.startswith("#") or href.startswith("javascript:"):
+                continue
+            url = urljoin(base_url, href)
+            if urlparse(url).netloc != base_netloc:
+                continue
+            if url in nav_urls:          # skip navigation links
+                continue
+            if url in seen:
+                continue
+            seen.add(url)
+            title = node.text(strip=True) or None
+            if not title or len(title) < _MIN_TITLE_LEN:
+                continue
+            pub_date = _extract_date_near_node(node)
+            date_missing = pub_date is None
+            if pub_date and pub_date < cutoff:
+                continue
+            result.append(
+                _DiscoveredItem(
+                    url=url,
+                    title=title,
+                    pub_date=pub_date,
+                    date_missing=date_missing,
+                    source=source,
+                )
             )
+        return result
+
+    # Pass 1 — content-area containers (most precise, nav already excluded above)
+    for sel in _CONTENT_AREA_SELECTORS:
+        area_nodes = list(tree.css(f"{sel} a[href]"))
+        if not area_nodes:
+            continue
+        items = _collect(area_nodes)
+        if items:
+            logger.debug(
+                "html listing: content-area selector matched",
+                base_url=base_url,
+                selector=sel,
+                kept=len(items),
+            )
+            return items
+
+    # Pass 2 — semantic article/heading selectors
+    semantic_nodes: list[Any] = []
+    for sel in _ARTICLE_LINK_SELECTORS:
+        semantic_nodes.extend(tree.css(sel))
+    items = _collect(semantic_nodes)
+    if items:
+        logger.debug(
+            "html listing: semantic selectors matched",
+            base_url=base_url,
+            kept=len(items),
         )
-    return items
+        return items
+
+    # Pass 3 — all same-domain links minus nav (broadest fallback)
+    logger.debug(
+        "html listing: fallback to all same-domain non-nav links",
+        base_url=base_url,
+    )
+    return _collect(list(tree.css("a[href]")))
 
 
 # ---------------------------------------------------------------------------
@@ -583,16 +658,95 @@ async def _try_sitemap(
     return items
 
 
+def _find_content_nav_urls(
+    html_text: str,
+    base_url: str,
+    patterns: list[str],
+) -> list[str]:
+    """Scan <nav> links and return those whose text matches content category patterns.
+
+    For example, given patterns ["news", "publication", "event", "consultation"],
+    a nav link labelled "Media Releases" won't match but "News Articles",
+    "Publications", "Events", or "Consultation Hub" will.
+
+    Returns a deduplicated list of same-domain URLs in document order.
+    """
+    if not patterns:
+        return []
+    compiled = [re.compile(re.escape(p), re.IGNORECASE) for p in patterns]
+    tree = HTMLParser(html_text)
+    base_netloc = urlparse(base_url).netloc
+    found: list[str] = []
+    seen: set[str] = set()
+
+    for sel in _NAV_SELECTORS:
+        for node in tree.css(f"{sel} a[href]"):
+            href = (cast(dict[str, str], node.attrs).get("href") or "").strip()
+            if not href or href.startswith("#") or href.startswith("javascript:"):
+                continue
+            url = urljoin(base_url, href)
+            if urlparse(url).netloc != base_netloc:
+                continue
+            if url in seen:
+                continue
+            text = node.text(strip=True)
+            if any(p.search(text) for p in compiled):
+                seen.add(url)
+                found.append(url)
+                logger.debug(
+                    "content nav link matched",
+                    text=text,
+                    url=url,
+                )
+
+    return found
+
+
 async def _try_html_listing(
     client: httpx.AsyncClient,
     source: SourceEntry,
     cutoff: datetime,
 ) -> list[_DiscoveredItem]:
-    """Parse source URL as a news listing page with selectolax."""
+    """Parse source URL as a news listing page.
+
+    If the page contains nav links matching ``content_nav_patterns`` (e.g.
+    "News Articles", "Publications", "Events"), those nav URLs are used as
+    listing pages instead of the source URL itself.  This lets you point the
+    pipeline at a site homepage or section page and have it automatically
+    find and crawl the right content sections.
+    """
     assert source.url
     text = await _fetch_text(client, source.url)
     if not text:
         return []
+
+    settings = get_settings()
+    content_nav_urls = _find_content_nav_urls(
+        text, source.url, settings.pipeline.content_nav_patterns
+    )
+
+    if content_nav_urls:
+        logger.info(
+            "content nav links found — crawling each as a listing page",
+            base_url=source.url,
+            listing_pages=content_nav_urls,
+        )
+        all_items: list[_DiscoveredItem] = []
+        for listing_url in content_nav_urls:
+            listing_text = await _fetch_text(client, listing_url)
+            if not listing_text:
+                continue
+            items = _items_from_html(listing_text, listing_url, source, cutoff)
+            if items:
+                logger.debug(
+                    "discovered via content nav listing",
+                    url=listing_url,
+                    count=len(items),
+                )
+                all_items.extend(items)
+        return all_items
+
+    # No content nav links found — treat the source URL itself as the listing page
     items = _items_from_html(text, source.url, source, cutoff)
     if items:
         logger.debug("discovered via HTML listing", url=source.url, count=len(items))

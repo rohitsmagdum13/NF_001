@@ -35,6 +35,7 @@ class PipelineConfig(BaseModel):
     cache_retention_days: int = Field(default=28, ge=1)
     fetch_concurrency: int = Field(default=8, ge=1, le=64)
     http_timeout_seconds: int = Field(default=15, ge=1, le=120)
+    content_nav_patterns: list[str] = Field(default_factory=list)
 
 
 class PathsConfig(BaseModel):

@@ -14,10 +14,14 @@
       "Bash(grep -E \"\\(classify start|classified$|classify complete|ERROR\\)\")",
       "Bash(grep -E \"\\(draft start|drafted$|draft complete|ERROR\\)\")",
       "Bash(python -c \"import json; data = json.loads\\(open\\('c:/Users/ROHIT/Work/Office/Hex_Proj/NF_001/data/source_registry.json', encoding='utf-8'\\).read\\(\\)\\); print\\(type\\(data\\), list\\(data.keys\\(\\)\\) if isinstance\\(data, dict\\) else 'not dict'\\)\")",
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "Read(//c/Users/ROHIT/.dbclient/query/1776929914265@@127.0.0.1@3306/**)",
+      "Bash(sqlite3 data/pipeline.db \"SELECT id, candidate_id, section, jurisdiction, content_type, editor_decision, substr\\(draft_text, 1, 80\\) as preview FROM drafts LIMIT 5;\")",
+      "Bash(python -c \"import sqlite3; c=sqlite3.connect\\('data/pipeline.db'\\); r=c.execute\\('SELECT COUNT\\(*\\) FROM drafts'\\).fetchone\\(\\); print\\('Drafts count:', r[0]\\); rows=c.execute\\('SELECT id, section, jurisdiction, content_type, editor_decision FROM drafts LIMIT 5'\\).fetchall\\(\\); [print\\(row\\) for row in rows]; c.close\\(\\)\")"
     ],
     "additionalDirectories": [
-      "c:\\Users\\ROHIT\\Work\\Office\\Hex_Proj\\NF_001\\src\\newsfeed"
+      "c:\\Users\\ROHIT\\Work\\Office\\Hex_Proj\\NF_001\\src\\newsfeed",
+      "c:\\Users\\ROHIT\\.dbclient\\query\\1776929914265@@127.0.0.1@3306"
     ]
   }
 }

@@ -5,393 +5,123 @@
       "section": "Water Reform",
       "entries": [
         {
-          "candidate_id": 9,
+          "candidate_id": 2,
+          "draft_id": 1,
+          "section": "Water Reform",
+          "jurisdiction": "New South Wales",
+          "content_type": "media_release",
+          "draft_text": "**WaterNSW Advances First Nations Engagement** WaterNSW has announced that \"Advancing First Nations engagement within WaterNSW has provided us with the opportunity to look, listen and learn about our operations from the perspectives of First Nations people.\" According to WaterNSW, \"The implementation of our Innovate RAP will now reinforce our achievements, continuing to build on the cultural competency of our employees and create a culturally safe environment for all First Nations people.\" WaterNSW's media release (not stated) *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/first-nations-programs",
+          "source_label": "Water_Reform__New_South_Wales__test-sources"
+        },
+        {
+          "candidate_id": 10,
           "draft_id": 2,
           "section": "Water Reform",
           "jurisdiction": "New South Wales",
           "content_type": "simple_update",
-          "draft_text": "**Tallowa Dam Fish Lift Upgrade**\nWaterNSW has made available an update - Tallowa Dam Fish Lift Upgrade (November 2024), which advises that \"Work to upgrade the Tallowa Dam fish lift started in November 2024 and will be completed in early 2026.\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/nsw-dams/greater-sydney-dams/tallowa-dam",
+          "draft_text": "**Water Management Regulation Update**\nWaterNSW has made available an update - Water Reform Compliance (not stated), which advises that \"[To comply with the Water Management (General) Regulation 2025, this form is to be completed by all water users whose work(s) don’t require a meter to record annual licensed and basic landholder rights (BLR) water take from a licensed work, and to confirm that cease to take conditions do not apply.]\"\n*(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/customer-services/metering/annual-recording-and-reporting-form",
           "source_label": "Water_Reform__New_South_Wales__test-sources"
         },
         {
-          "candidate_id": 34,
-          "draft_id": 7,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Reform Update** WaterNSW has made available an update - Dam Safety Management (not stated), which advises that \"WaterNSW complies with a strict set of requirements for each of the dams we manage as outlined under the NSW Dams Safety Act 2015.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-storage/dam-safety",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 37,
-          "draft_id": 9,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Operations Update** WaterNSW has made available an update - River Management Practices (not stated), which advises that \"We effectively operate the state's regulated rivers to deliver water and manage river levels.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-delivery/river-operations",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 38,
-          "draft_id": 10,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Reform Update** WaterNSW has made available an update - Environmental Flows (not stated), which advises that \"WaterNSW releases environmental water from our storages to help mitigate environmental impacts.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-delivery/environmental-flows",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 42,
-          "draft_id": 14,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Reform Update**\nWaterNSW has made available an update - Catchment Protection (not stated), which advises that \"[In Greater Sydney, WaterNSW is responsible for protecting the health of the Sydney catchment area to ensure reliable, quality drinking water is available for the 5 million people of Sydney and the Illawarra, Blue Mountains, Southern Highlands, Goulburn and Shoalhaven regions.]\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/catchment-protection",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 43,
-          "draft_id": 15,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**WaterNSW Catchment Management Update** WaterNSW has made available an update - Catchment Management Strategy (not stated), which advises that \"Research plays a key role in our management of the Sydney catchment. Each year we publish a Catchment Protection Work Program (available below) that details the specific work and activities that will be delivered.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/catchment-protection/management",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 44,
-          "draft_id": 16,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Reform Update** WaterNSW has made available an update - Special and Controlled Areas (not stated), which advises that \"Public entry and activities are prohibited or restricted in these areas to protect water quality.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/catchment-protection/protected-special-and-controlled-areas",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 45,
-          "draft_id": 17,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Quality Requirements for Developments** WaterNSW has made available an update - Water Reform (not stated), which advises that \"[All proposed developments in this catchment are required to have a neutral or beneficial effect on water quality (NorBE).]\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/catchment-protection/building-and-development",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 46,
-          "draft_id": 18,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Reform Update** WaterNSW has made available an update - Residential Land Use Management (not stated), which advises that \"landholders who live within Sydney catchment areas are responsible for appropriately managing the land that they reside upon.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/catchment-protection/land-use-and-management",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 47,
-          "draft_id": 19,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Data Utilization Update** WaterNSW has made available an update - Water Reform (not stated), which advises that \"We use and share data to enable the best water decisions and outcomes.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-data",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 48,
-          "draft_id": 20,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Monitoring Network Update** WaterNSW has made available an update - Water Reform (not stated), which advises that \"WaterNSW operates a wide range of water monitoring programs to measure both water quality, and quantity, in all rivers, streams, groundwater bores and the dams that we operate across NSW.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-data/water-monitoring-network",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 49,
-          "draft_id": 21,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**WaterInsights Web Tool Launch**\n(not stated) has made available an update - WaterInsights Web Tool Launch (not stated), which advises that \"[WaterInsights is an interactive web tool, covering more than 800 water sources in NSW.]\"\n*(Source: (not stated))*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-data/water-insights",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 54,
-          "draft_id": 23,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**WaterNSW Minor Projects Update** WaterNSW has made available an update - Minor Projects (not stated), which advises that \"[WaterNSW undertakes a broad range of minor projects including maintenance and upgrades to our infrastructure to ensure we can continue to deliver water, when and where it’s needed.]\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/projects/minor-projects",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 55,
-          "draft_id": 24,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "bullet_list",
-          "draft_text": "**WaterNSW Media Releases** WaterNSW has made available the following media releases: - \"Community-update-Renewable-Energy-Program-pre-feasibility-studies-March-2025.pdf\" (March 2025); - \"Renewable Energy Storage Program update\" (November 2024); and - (not stated) (not stated). *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/renewable-energy-and-storage-program",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 56,
-          "draft_id": 25,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**WaterNSW Renewable Energy Update** WaterNSW has made available an update - Phoenix Pumped Hydro Project (not stated), which advises that \"[The Project is located within the Central-West Orana REZ and, if constructed, will provide the long duration storage required to support renewables penetration in this region.]\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/renewable-energy-and-storage-program/phoenix-pumped-hydro-project",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 57,
-          "draft_id": 26,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**AGL's Pumped Hydro Projects in Upper Hunter**\nWaterNSW has made available an update - AGL's Energy Storage Initiative (not stated), which advises that \"AGL is proposing two large pumped hydro projects, with the opportunity for integrated wind energy, at WaterNSW’s Glenbawn and Glennies Creek reservoirs in the Upper Hunter.\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/renewable-energy-and-storage-program/AGL-projects",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 58,
-          "draft_id": 27,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "media_release",
-          "draft_text": "**WaterNSW Project Announcement**\nWaterNSW has announced that \"ZEN Energy will seek to secure all necessary approvals and consent for their projects.\"\nAccording to WaterNSW, \"WaterNSW has conducted a water quality risk assessment on all aspects of the proposal and we will continue to do our own analysis regularly, during the planning and approval processes.\"\nWaterNSW's media release (not stated)\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/renewable-energy-and-storage-program/Western-Sydney-Pumped-Hydro-Project",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 64,
-          "draft_id": 29,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Licensing Update** WaterNSW has made available an update - Water Reform (not stated), which advises that \"WaterNSW customers are encouraged to book a phone appointment with us to discuss your water licensing enquiries.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-licensing",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 66,
-          "draft_id": 31,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Access Licences Update**\nWaterNSW has made available an update - Water Reform (not stated), which advises that \"[A water access licence (WAL) is generally required to extract water from rivers or aquifers to use for irrigation, industrial or commercial purposes.]\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-licensing/licences",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 67,
-          "draft_id": 32,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Access Licence Management Update**\nWaterNSW has made available an update - Water Reform (not stated), which advises that \"any change to an existing water access licence must be registered with NSW Land Registry Services (LRS) within six months of the dealing being granted.\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-licensing/managing-your-licence",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 68,
-          "draft_id": 33,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Supply Works and Use Approvals Update** WaterNSW has made available an update - Water Reform (not stated), which advises that \"Customers can now apply for a new water supply work and/or water use approval through our Customer Portal.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-licensing/approvals",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 69,
-          "draft_id": 34,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Floodplain Management Update**\nWaterNSW has made available an update - Interagency Action Plan (not stated), which advises that \"WaterNSW and the Department of Climate Change, Energy, the Environment and Water (DCCEEW) have been working with customers and landholders to implement Floodplain Management Plans (FMPs).\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-licensing/flood-work-approvals",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 70,
-          "draft_id": 35,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Floodplain Harvesting Policy Update**\nNSW Government has made available an update - Floodplain Harvesting Policy (not stated), which advises that \"[floodplain harvesting refers to the capture of rainfall runoff, whether contaminated or not, and overbank flow]\".\n*(Source: NSW Government)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-licensing/floodplainharvesting",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 71,
-          "draft_id": 36,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Application Processing Update**\nWaterNSW has made available an update - Water Reform (1 October 2025 – 31 December 2025), which advises that \"Due to higher application volumes and some delays in assessments with external agencies, there may be an impact on our usual service timeframes. We appreciate your patience and understanding as we work to process applications as quickly as possible.\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-licensing/applications-and-fees",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 72,
-          "draft_id": 37,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Dewatering Exemptions Update**\nNSW Department of Climate Change, Energy, the Environment and Water (NSW DCCEEW) has made available an update - Dewatering Exemptions Update (not stated), which advises that \"[The NSW Department of Climate Change, Energy, the Environment and Water (NSW DCCEEW) have made recent changes to dewatering exemptions.]\"\n*(Source: NSW Department of Climate Change, Energy, the Environment and Water (NSW DCCEEW))*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-licensing/dewatering",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 73,
-          "draft_id": 38,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Application Advertising Update**\nWaterNSW has made available an update - Water Reform (not stated), which advises that \"[Certain types of water applications are required under the Water Management Act 2000 to be advertised to provide members of the community with an opportunity to lodge an objection to the granting of the application before a decision is made.]\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-licensing/advertising-and-objections",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 74,
-          "draft_id": 39,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Non-Urban Metering Regulation Update** WaterNSW has made available an update - Non-Urban Metering Regulation (not stated), which advises that \"the recently amended non-urban metering regulation focuses on enhancing metering accuracy, ensuring compliance, and supporting sustainable water use.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/metering/non-urban-metering",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 75,
-          "draft_id": 40,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Recording and Reporting Update**\nWaterNSW has made available an update - Water Recording and Reporting Update (not stated), which advises that \"you can now sign-up to our complimentary SMS reminder service.\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/metering/recording-and-reporting",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 76,
-          "draft_id": 41,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Reform Update** WaterNSW has made available an update - Online Water Accounting System (not stated), which advises that \"Our 24/7 online Water Accounting System (iWAS) allows you to easily access and manage your water account anywhere, anytime.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/ordering-and-trading",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 78,
-          "draft_id": 43,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Trading Deadlines Update**\nWaterNSW has made available an update - Water Reform (not stated), which advises that \"the new 2025/26 deadlines to submit your trade application is 11:59pm 16 June 2026 for water sharing plans other than Murrumbidgee and NSW Murray and Lower Darling regulated interstate customers.\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/ordering-and-trading/trading-water",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 79,
-          "draft_id": 44,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Murrumbidgee IVT Update** WaterNSW has made available an update - Murrumbidgee Inter-Valley Trade (IVT) (23 April 2026), which advises that \"There is capacity for 94.1GL to be transferred out of the Murrumbidgee valley.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/ordering-and-trading/murrumbidgee-ivt",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 80,
-          "draft_id": 45,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Online Water Accounting System Update**\nWaterNSW has made available an update - Online Water Accounting System (iWAS) (not stated), which advises that \"[Our 24/7 online Water Accounting System (iWAS) allows you to easily access and manage your water account anywhere, anytime. iWAS is available to all registered WaterNSW regulated river, unregulated river and groundwater customers.]\".\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/ordering-and-trading/iWAS",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 81,
-          "draft_id": 46,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Pricing Update** WaterNSW has made available an update - Water Reform (not stated), which advises that \"we are here to help you understand water pricing in NSW.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-pricing",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 82,
-          "draft_id": 47,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Pricing Update** WaterNSW has made available an update - Rural Bulk Water Prices 2025-26 (not stated), which advises that \"The rural bulk water prices are for the period of 1 July 2025 to 30 June 2026 and Water Administration Ministerial Corporation (WAMC) for the period of 1 July 2025 to 30 September 2025.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-pricing/fees-and-charges",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 83,
-          "draft_id": 48,
-          "section": "Water Reform",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Pricing Update**\nWaterNSW has made available an update - Water Reform (not stated), which advises that \"there is a delay to the 2025 Water Administration Ministerial Corporation (WAMC) determination until 1 October 2025. As such 2024-25 WAMC pricing will remain in place until 30 September 2025 and is subject to change 1 October 2025.\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-pricing/billing-calculators",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 84,
-          "draft_id": 49,
+          "candidate_id": 14,
+          "draft_id": 3,
           "section": "Water Reform",
           "jurisdiction": "New South Wales",
           "content_type": "new_plan",
-          "draft_text": "**WaterNSW Pricing Proposal 2025-2030** The WaterNSW Pricing Proposal 2025-2030 (New South Wales) has been made under the authority of the (not stated). The Plan: - involves strategic and financial investments over the 2025-30 period; - was developed after extensive consultation with stakeholders; and - was submitted to the NSW Independent Pricing and Regulatory Tribunal (IPART) in September 2024. The Plan commenced on (not stated). *(Source: Lawlex Legislative Alert & Premium Research)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-pricing/2025-30-pricing-proposal",
+          "draft_text": "**WaterNSW Regulation 2026 Draft Plan** The WaterNSW Regulation 2026 (New South Wales) has been made under the authority of the (not stated). The Plan: - is essential for WaterNSW to manage and protect declared catchment areas; - defines local councils to which WaterNSW supplies water; and - contains several amendments proposed to clarify the intent or improve the effectiveness of some provisions. The Plan commenced on 16 February 2026. *(Source: Lawlex Legislative Alert & Premium Research)*",
+          "source_url": "https://www.waternsw.com.au/community-news/the-flow/2026/review-of-the-waternsw-regulation-2020",
           "source_label": "Water_Reform__New_South_Wales__test-sources"
         },
         {
-          "candidate_id": 87,
-          "draft_id": 50,
+          "candidate_id": 15,
+          "draft_id": 4,
           "section": "Water Reform",
           "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**WaterNSW Customer Service Charter Update** WaterNSW has made available an update - Customer Service Charter (not stated), which advises that \"[All future metering enquiries regarding installation should be referred to the NSW Government's Water Reform Action Plan.]\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/help-and-support/customer-service-charter",
+          "content_type": "media_release",
+          "draft_text": "**WaterNSW Celebrates National Reconciliation Week 2025** WaterNSW has announced that \"[We’ve been engaging with First Nations communities to develop strong and trusting relationships, extending from Reconciliation Week to NAIDOC, to the modern-day corroboree of the Koori Knockout on Wiradjuri Country and support for the annual memorial of the Appin Massacre.]\". According to WaterNSW, \"[In ‘Bridging Now to Next’ we reflected together on WaterNSW’s reconciliation journey and the strides we’ve made to move forward together.]\". WaterNSW's media release (19 June 2025) *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/the-flow/2025/national-reconciliation-week-2025",
           "source_label": "Water_Reform__New_South_Wales__test-sources"
         },
         {
-          "candidate_id": 104,
-          "draft_id": 56,
+          "candidate_id": 16,
+          "draft_id": 5,
           "section": "Water Reform",
           "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Management Guidance**\nWaterNSW has made available an update - Farm Dam Handbook (2011), which advises that \"this book provides advice to help you keep your dam in good condition to enhance the health of your property.\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/education/keeping-waterways-healthy/water-on-your-property",
+          "content_type": "media_release",
+          "draft_text": "**Water Reform in New South Wales** WaterNSW has announced that \"it's part of our new Catchment Carers program where we are taking to the road to deliver our water education activities at schools in Sydney’s drinking water catchment.\" According to WaterNSW, \"these incursions to local schools allow us to share some of the wonderful educational experiences previously only available to schools who visit our Warragamba Dam Visitor Centre.\" WaterNSW's media release (1 April 2025) *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/the-flow/2025/catchment-carers-program-takes-water-education-into-schools",
           "source_label": "Water_Reform__New_South_Wales__test-sources"
         },
         {
-          "candidate_id": 105,
-          "draft_id": 57,
+          "candidate_id": 17,
+          "draft_id": 6,
           "section": "Water Reform",
           "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Reform Update** WaterNSW has made available an update - Land and Property Management (not stated), which advises that \"We can all play our part in keeping the local environment and waterways healthy.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/education/keeping-waterways-healthy/land-and-property-management",
+          "content_type": "media_release",
+          "draft_text": "**WaterNSW Shortlisted for NSW Water Awards 2025** WaterNSW has announced that \"WaterNSW has been shortlisted in two categories at the 2025 NSW Water Award, recognising outstanding achievements of innovation in the water sector.\" According to WaterNSW, \"We are delighted some of our many important research projects have been recognised in this way.\" WaterNSW's media release (15 January 2025) *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/the-flow/2025/innovation-recognised-by-water-award-nominations",
+          "source_label": "Water_Reform__New_South_Wales__test-sources"
+        },
+        {
+          "candidate_id": 20,
+          "draft_id": 8,
+          "section": "Water Reform",
+          "jurisdiction": "New South Wales",
+          "content_type": "media_release",
+          "draft_text": "**Sign up to receive blue-green algae alerts on WaterInsights**\nWaterNSW has announced that \"[People can now sign up to receive alerts about potentially toxic blue-green algae in dams and rivers across the state, by creating a free account on WaterInsights.]\".\nAccording to WaterNSW, \"[Algae alerts are now available on WaterInsights, and we want as many water users as possible to sign up so they can safely enjoy our dams and recreational areas.]\".\nWaterNSW's media release (1 APRIL 2026)\n*(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2026/sign-up-to-receive-blue-green-algae-alerts-on-waterinsights",
+          "source_label": "Water_Reform__New_South_Wales__test-sources"
+        },
+        {
+          "candidate_id": 21,
+          "draft_id": 9,
+          "section": "Water Reform",
+          "jurisdiction": "New South Wales",
+          "content_type": "media_release",
+          "draft_text": "**WaterNSW dam safety project wins top AWA award** WaterNSW has announced that \"an automated high-tech dam safety surveillance system installed at a critical Sydney water supply storage has won WaterNSW a major infrastructure award at the Australian Water Association (AWA) annual NSW awards.\" According to WaterNSW, \"The WaterNSW Prospect Automated Surveying System project won the NSW Infrastructure Innovation award for implementing an advanced real-time monitoring network at Prospect Reservoir, which stores water from Warragamba Dam, and is located approximately 34km west of Sydney.\" WaterNSW's media release (18 MARCH 2026) *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2026/waternsw-dam-safety-project-wins-top-awa-award",
+          "source_label": "Water_Reform__New_South_Wales__test-sources"
+        },
+        {
+          "candidate_id": 23,
+          "draft_id": 10,
+          "section": "Water Reform",
+          "jurisdiction": "New South Wales",
+          "content_type": "media_release",
+          "draft_text": "**WaterNSW shortlists 3 more sites for pumped hydro** WaterNSW has announced that \"Blowering, Burrendong and Hume dams are three of the WaterNSW sites shortlisted for potential new pumped hydro energy storage projects.\" According to WaterNSW, \"This announcement is an important milestone in identifying new sites at WaterNSW dams that could host more privately developed long-duration pumped hydro projects to support the State’s renewable energy transition.\" WaterNSW's media release (2 OCTOBER 2025) *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2025/waternsw-shortlists-3-more-sites-for-pumped-hydro",
+          "source_label": "Water_Reform__New_South_Wales__test-sources"
+        },
+        {
+          "candidate_id": 29,
+          "draft_id": 13,
+          "section": "Water Reform",
+          "jurisdiction": "New South Wales",
+          "content_type": "media_release",
+          "draft_text": "**Pindari Dam trial targets cold water pollution impacts on native fish**\nWaterNSW has announced that \"[WaterNSW will host a unique trial aimed at addressing one of the major factors impacting inland native fish breeding, with the Australian Government providing a $26.2 million investment into the Pindari Dam Cold Water Pollution project.]\".\nAccording to WaterNSW, \"[Cold water pollution is a well-recognised issue associated with dam operations, especially the large supply dams that are typical to regional NSW,]\".\nWaterNSW's media release (8 SEPTEMBER 2025)\n*(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2025/pindari-dam-trial-targets-cold-water-pollution-impacts-on-native-fish",
+          "source_label": "Water_Reform__New_South_Wales__test-sources"
+        },
+        {
+          "candidate_id": 31,
+          "draft_id": 15,
+          "section": "Water Reform",
+          "jurisdiction": "New South Wales",
+          "content_type": "media_release",
+          "draft_text": "**Upgraded one-stop-shop for NSW water users** WaterNSW has announced that \"[It’s now easier than ever for NSW water users to apply for a range of approvals and other online services thanks to upgrades to the WaterNSW Customer Portal.]\". According to WaterNSW, \"[We’ve listened to our customers who have told us they want one place to manage more water licensing and approval related needs, including additional self-service options to complete these transactions online.]\". WaterNSW's media release (3 SEPTEMBER 2025) *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2025/upgraded-one-stop-shop-for-nsw-water-users",
+          "source_label": "Water_Reform__New_South_Wales__test-sources"
+        },
+        {
+          "candidate_id": 32,
+          "draft_id": 16,
+          "section": "Water Reform",
+          "jurisdiction": "New South Wales",
+          "content_type": "media_release",
+          "draft_text": "**Jason Conroy appointed to WaterNSW Board**\nWaterNSW has announced that \"[Jason Conroy appointed to WaterNSW Board]\".\nAccording to WaterNSW, \"[WaterNSW, the state’s dam operator, has confirmed the appointment of Jason Conroy to its Board of Directors.]\".\nWaterNSW's media release (26 AUGUST 2025)\n*(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2025/jason-conroy-appointed-to-waternsw-board",
           "source_label": "Water_Reform__New_South_Wales__test-sources"
         }
       ]
@@ -400,138 +130,13 @@
       "section": "Urban Water Supply and Use",
       "entries": [
         {
-          "candidate_id": 3,
-          "draft_id": 1,
+          "candidate_id": 27,
+          "draft_id": 11,
           "section": "Urban Water Supply and Use",
           "jurisdiction": "New South Wales",
           "content_type": "simple_update",
-          "draft_text": "**Urban Water Supply Update** WaterNSW has made available an update - Urban Water Supply and Use (not stated), which advises that \"WaterNSW manages a complex network of dams, storages and pipelines to supply water to its customers across Greater Sydney and Regional NSW\". *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/nsw-dams?filter=sydney",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 31,
-          "draft_id": 5,
-          "section": "Urban Water Supply and Use",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Urban Water Supply and Use Update** WaterNSW has made available an update - Urban Water Supply and Use (not stated), which advises that \"[WaterNSW releases water from our storages to deliver water, when and where it matters.]\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 33,
-          "draft_id": 6,
-          "section": "Urban Water Supply and Use",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Urban Water Supply and Use Update** WaterNSW has made available an update - Greater Sydney Water Management (not stated), which advises that \"Warragamba Dam is Greater Sydney's major supply dam.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-storage/managing-dams-and-reservoirs",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 36,
-          "draft_id": 8,
-          "section": "Urban Water Supply and Use",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Urban Water Supply Update** WaterNSW has made available an update - Bulk Water Supply Management (not stated), which advises that \"[WaterNSW manages the bulk supply of raw water to the Greater Sydney region and regional NSW. In fact, we supply more than two-thirds of the water used across NSW.]\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-delivery/bulk-water-supply",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 97,
-          "draft_id": 51,
-          "section": "Urban Water Supply and Use",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Greater Sydney Drinking Water Catchment Update** WaterNSW has made available an update - Greater Sydney Drinking Water Catchment (not stated), which advises that \"The five catchments in Greater Sydney cover 16,000 square kilometres of land. This is only 2% of the land area of NSW, but it supplies drinking water to 60% of the state's population - over 5 million people who live in Sydney and the Blue Mountains, Illawarra, Southern Highlands, Goulburn and Shoalhaven regions.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/education/learning-about-water/catchments",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 99,
-          "draft_id": 52,
-          "section": "Urban Water Supply and Use",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Urban Water Supply Update** WaterNSW has made available an update - Greater Sydney Water Supply (not stated), which advises that \"[WaterNSW manages the dams and raw (untreated) water supply system, and also helps protect the health of the water catchments.]\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/education/learning-about-water/the-water-supply-system",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 100,
-          "draft_id": 53,
-          "section": "Urban Water Supply and Use",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Fish River Water Supply Scheme Update**\nWaterNSW has made available an update - Fish River Water Supply Scheme (not stated), which advises that \"[The Fish River water supply scheme on the NSW Central Tablelands is unique as the only water supply scheme in eastern Australia to transfer western flowing water east of the Great Dividing Range, mostly by gravity.]\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/education/learning-about-water/history-and-heritage",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        }
-      ]
-    },
-    {
-      "section": "Rural Water Supply and Use",
-      "entries": [
-        {
-          "candidate_id": 20,
-          "draft_id": 3,
-          "section": "Rural Water Supply and Use",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Glenbawn Dam Update** WaterNSW has made available an update - Glenbawn Dam Capacity and Operations (not stated), which advises that \"Glenbawn Dam has a capacity of 750,000 megalitres, one and a half times that of Sydney Harbour. It has additional potential capacity of 120,000 megalitres for flood mitigation.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/nsw-dams/regional-nsw-dams/glenbawn-dam",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 28,
-          "draft_id": 4,
-          "section": "Rural Water Supply and Use",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Toonumbar Dam Update** WaterNSW has made available an update - Rural Water Supply and Use (not stated), which advises that \"Toonumbar Dam was built to provide a reliable supply of water for irrigation in the Richmond Valley, meet downstream stock and domestic needs, and provide flood mitigation and environmental flows.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/nsw-dams/regional-nsw-dams/toonumbar-dam",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 77,
-          "draft_id": 42,
-          "section": "Rural Water Supply and Use",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Online Water Ordering System Update** WaterNSW has made available an update - Online Water Ordering System (not stated), which advises that \"You can complete your water order using our 24/7 online Water Accounting System (iWAS).\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/ordering-and-trading/ordering-water",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        }
-      ]
-    },
-    {
-      "section": "Conservation",
-      "entries": [
-        {
-          "candidate_id": 107,
-          "draft_id": 58,
-          "section": "Conservation",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Conservation Update: Native Vegetation and Wildlife Protection**\n(not stated) has made available an update - Conservation Efforts in New South Wales (not stated), which advises that \"Remnant native vegetation is protected by the Native Vegetation Act 2003 . The legislation prevents broadscale clearing to protect the health of our land, rivers and wildlife.\" *(Source: (not stated))*",
-          "source_url": "https://www.waternsw.com.au/education/keeping-waterways-healthy/flora-and-fauna",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        }
-      ]
-    },
-    {
-      "section": "Water Rights",
-      "entries": [
-        {
-          "candidate_id": 65,
-          "draft_id": 30,
-          "section": "Water Rights",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Basic Landholder Rights Update** WaterNSW has made available an update - Basic Landholder Rights (not stated), which advises that \"Customers can now apply for a basic landholder rights (BLR) bore through our Customer Portal.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/customer-services/water-licensing/basic-landholder-rights",
+          "draft_text": "**Warragamba Dam Spills for the Fifth Time Since May** WaterNSW has made available an update - Warragamba Dam spills for the fifth time since May (12 SEPTEMBER 2025), which advises that \"[Warragamba Dam has reached full capacity and started to spill at 3.25am today.]\" *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2025/warragamba-dam-spills-for-the-fifth-time-since-may",
           "source_label": "Water_Reform__New_South_Wales__test-sources"
         }
       ]
@@ -540,68 +145,33 @@
       "section": "Waterways and Flood Mitigation",
       "entries": [
         {
-          "candidate_id": 51,
-          "draft_id": 22,
+          "candidate_id": 19,
+          "draft_id": 7,
           "section": "Waterways and Flood Mitigation",
           "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Waterways and Flood Mitigation Update** WaterNSW has made available an update - Extreme Weather Response (not stated), which advises that \"WaterNSW has an Incident Management Team to ensure our response is fast and effective in delivering the best possible outcome for the customers and communities we serve.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/extreme-weather-response",
+          "content_type": "media_release",
+          "draft_text": "**World Water Day Celebrations** WaterNSW has announced that \"World Water Day, celebrated each year on 22 March, spotlights the important role of water sources – such as rivers, lakes, creeks and groundwater– and advocates for the sustainable management of this vital resource.\" According to WaterNSW, \"This World Water Day, we take a moment to celebrate the importance of the waterways we manage and reflect on our role as custodians of the state’s water.\" WaterNSW's media release (24 March 2025) *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/the-flow/2025/proud-custodians",
           "source_label": "Water_Reform__New_South_Wales__test-sources"
         },
         {
-          "candidate_id": 102,
-          "draft_id": 54,
-          "section": "Waterways and Flood Mitigation",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Waterways Health Responsibility**\nWaterNSW has made available an update - Waterways and Flood Mitigation (not stated), which advises that \"[Keeping our waterways healthy is everybody's responsibility.]\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/education/keeping-waterways-healthy",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        }
-      ]
-    },
-    {
-      "section": "General Water Quality and Sustainability",
-      "entries": [
-        {
-          "candidate_id": 39,
-          "draft_id": 11,
-          "section": "General Water Quality and Sustainability",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Quality Monitoring Update**\nWaterNSW has made available an update - General Water Quality and Sustainability (not stated), which advises that \"Monitoring water quality allows WaterNSW to quickly respond to changes and where appropriate, the data collected is used to inform the development of mitigation strategies to improve water quality.\"\n*(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-quality",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 40,
+          "candidate_id": 28,
           "draft_id": 12,
-          "section": "General Water Quality and Sustainability",
+          "section": "Waterways and Flood Mitigation",
           "jurisdiction": "New South Wales",
           "content_type": "simple_update",
-          "draft_text": "**Water Quality Monitoring Update** WaterNSW has made available an update - Monitoring Water Quality Across New South Wales (not stated), which advises that \"[The raw water we supply comes from rivers and lakes, where quality can vary at times as these are natural environments.]\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-quality/management",
+          "draft_text": "**Warragamba Dam Forecast to Spill** WaterNSW has made available an update - Warragamba Dam forecast to spill in coming days (9 SEPTEMBER 2025), which advises that \"[there is a likelihood Warragamba Dam may fill and spill in coming days.]\" *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2025/warragamba-dam-forecast-to-spill-in-coming-days2",
           "source_label": "Water_Reform__New_South_Wales__test-sources"
         },
         {
-          "candidate_id": 41,
-          "draft_id": 13,
-          "section": "General Water Quality and Sustainability",
+          "candidate_id": 30,
+          "draft_id": 14,
+          "section": "Waterways and Flood Mitigation",
           "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**Water Quality Monitoring Update** WaterNSW has made available an update - Annual Water Quality Monitoring Report (not stated), which advises that \"WaterNSW is committed to providing up-to-date and transparent data. This includes our Annual Water Quality Monitoring Report.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/water-services/water-quality/monitoring-and-reporting",
-          "source_label": "Water_Reform__New_South_Wales__test-sources"
-        },
-        {
-          "candidate_id": 103,
-          "draft_id": 55,
-          "section": "General Water Quality and Sustainability",
-          "jurisdiction": "New South Wales",
-          "content_type": "simple_update",
-          "draft_text": "**General Water Quality and Sustainability Update** WaterNSW has made available an update - Managing raw water quality across NSW (not stated), which advises that \"Managing the Greater Sydney catchment areas and ensuring we reduce pollution risks is a key responsibility of ours.\" *(Source: WaterNSW)*",
-          "source_url": "https://www.waternsw.com.au/education/keeping-waterways-healthy/maintaining-water-quality",
+          "content_type": "media_release",
+          "draft_text": "**Leeton Flood Work Approvals Info Session** WaterNSW has announced that \"WaterNSW specialist staff will be in Leeton on Wednesday 10 September hosting an information session for water users to learn more about flood works and flood work approvals.\" According to WaterNSW, \"Flood work approvals ensure that the construction or use of works such as causeways, cuttings or embankments does not negatively affect water sources and dependent ecosystems, or other water users.\" WaterNSW's media release (5 SEPTEMBER 2025) *(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2025/leeton-flood-work-approvals-info-session",
           "source_label": "Water_Reform__New_South_Wales__test-sources"
         }
       ]
