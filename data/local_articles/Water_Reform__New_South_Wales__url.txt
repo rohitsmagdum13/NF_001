@@ -3,3 +3,7 @@
 #   → section="Water Reform", jurisdiction="New South Wales"
 
 https://www.waternsw.com.au/community-news/media-releases
+
+# Murray Irrigation Limited — sourced from reference001/reference/Water_Newsfeed_Template.md
+# (listed under "New South Wales - Water Reform"). Verified 200 OK on 2026-04-24.
+https://www.mirrigation.com.au/

@@ -1,0 +1,634 @@
+[
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.accc.gov.au/focus-areas/inquiries-ongoing/murray-darling-basin-water-markets-inquiry",
+        200,
+        "OK",
+        "https://www.accc.gov.au/inquiries-and-consultations/finalised-inquiries/murray-darling-basin-water-markets-inquiry-2019-21"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.wsaa.asn.au/news",
+        200,
+        "OK",
+        "https://www.wsaa.asn.au/news"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://watersource.awa.asn.au/",
+        200,
+        "OK",
+        "https://www.awa.asn.au/"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "http://www.awa.asn.au/AWA_MBRR/Publications/AWA_MBRR/Publications/Publications_and_Information.aspx?hkey=ca21efb0-39e3-4274-b1a4-0f500472a26a",
+        200,
+        "OK",
+        "https://www.awa.asn.au/resources?hkey=ca21efb0-39e3-4274-b1a4-0f500472a26a"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.environment.gov.au/water/cewo/media-release",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.nationalwatergrid.gov.au/",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.igmdb.gov.au/reviews",
+        0,
+        "ERR:ConnectError",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.agriculture.gov.au/abares/publications",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "http://www.agriculture.gov.au/about/media-centre",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.mdba.gov.au/media/media-releases?date[value",
+        200,
+        "OK",
+        "https://webarchive.nla.gov.au/awa/20230626101836/https://www.mdba.gov.au/news-media-events/newsroom/media-centre?date_value="
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.mdba.gov.au/publications/all-publications",
+        404,
+        "404",
+        "https://www.mdba.gov.au/publications/all-publications"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.mdba.gov.au/river-information/weekly-reports",
+        200,
+        "OK",
+        "https://www.mdba.gov.au/publications-and-data/data-and-dashboards/river-murray-weekly-reports-0"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.environment.gov.au/news/commonwealth-environmental-water-office",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://minister.awe.gov.au/",
+        0,
+        "ERR:ConnectError",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://minister.awe.gov.au/littleproud",
+        0,
+        "ERR:ConnectError",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "http://www.agriculture.gov.au/abares/publications/weekly_update",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "http://lakeeyrebasin.gov.au/",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "http://gabcc.org.au/12094/GAB-News/",
+        0,
+        "ERR:ConnectError",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "http://nban.org.au/",
+        200,
+        "OK",
+        "https://nban.org.au/"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "http://www.bom.gov.au/water/?ref=ftr",
+        200,
+        "OK",
+        "https://www.bom.gov.au/water/?ref=ftr"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.mdbrc.sa.gov.au/",
+        0,
+        "ERR:ConnectError",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.waterra.com.au/",
+        200,
+        "OK",
+        "https://www.waterra.com.au/"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "http://www.abc.net.au/news/topic/water",
+        200,
+        "OK",
+        "https://www.abc.net.au/news/topic/water-resources?future=true"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.theguardian.com/uk/environment",
+        200,
+        "OK",
+        "https://www.theguardian.com/uk/environment"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://watersensitivecities.org.au/content_type/news/",
+        200,
+        "OK",
+        "https://watersensitivecities.org.au/content_type/news/"
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "https://www.waterquality.gov.au/",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "National",
+        "http://epbcnotices.environment.gov.au/publicnoticesreferrals/",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "https://www2.delwp.vic.gov.au/media-centre/news-and-announcements",
+        0,
+        "ERR:ConnectError",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "https://www.melbournewater.com.au/",
+        200,
+        "OK",
+        "https://www.melbournewater.com.au/"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "https://www.melbournewater.com.au/water/water-storage-and-use#/ws/freq/weekly/type/storage",
+        200,
+        "OK",
+        "https://www.melbournewater.com.au/water-and-environment/water-management/water-storage-levels#/ws/freq/weekly/type/storage"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "https://www.esc.vic.gov.au/media-centre",
+        200,
+        "OK",
+        "https://www.esc.vic.gov.au/media-centre"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "https://www.citywestwater.com.au/news_centre/media_centre.aspx",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "https://www.lmw.vic.gov.au/news-media/",
+        403,
+        "BLOCKED",
+        "https://www.lmw.vic.gov.au/news-media/"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "http://southeastwater.com.au/NewsEvents/Newsroom/Pages/News.aspx",
+        200,
+        "OK",
+        "https://southeastwater.com.au/"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "http://www.g-mwater.com.au/",
+        200,
+        "OK",
+        "https://www.g-mwater.com.au/"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "https://www.gippswater.com.au/",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "http://www.gwmwater.org.au/news",
+        200,
+        "OK",
+        "https://www.gwmwater.org.au/news"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "http://www.srw.com.au/media/",
+        200,
+        "OK",
+        "https://www.srw.com.au/news-media"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "http://www.sustainability.vic.gov.au/",
+        200,
+        "OK",
+        "https://www.sustainability.vic.gov.au/"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "http://www.ccma.vic.gov.au/Home.aspx",
+        404,
+        "404",
+        "http://ccma.vic.gov.au/Home.aspx"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "http://www.malleecma.vic.gov.au/",
+        0,
+        "ERR:ConnectError",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "https://www.ewov.com.au/",
+        200,
+        "OK",
+        "https://www.ewov.com.au/"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "https://www.barwonwater.vic.gov.au/about-us/news-and-events",
+        403,
+        "BLOCKED",
+        "https://www.barwonwater.vic.gov.au/about-us/news-and-events"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "http://www.vewh.vic.gov.au/news-and-publications/news",
+        403,
+        "BLOCKED",
+        "https://www.vewh.vic.gov.au/news-and-publications/news"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "http://waterregister.vic.gov.au/",
+        200,
+        "OK",
+        "https://waterregister.vic.gov.au/"
+    ],
+    [
+        "1. Water Reform",
+        "Victoria",
+        "https://www.yvw.com.au/about-us/news",
+        200,
+        "OK",
+        "https://www.yvw.com.au/news"
+    ],
+    [
+        "1. Water Reform",
+        "New South Wales",
+        "http://www.waternsw.com.au/about/newsroom",
+        200,
+        "OK",
+        "https://www.waternsw.com.au/community-news/media-releases"
+    ],
+    [
+        "1. Water Reform",
+        "New South Wales",
+        "https://www.industry.nsw.gov.au/water/allocations-availability/allocations/determinations",
+        200,
+        "OK",
+        "https://www.nsw.gov.au/departments-and-agencies/department-of-planning-housing-and-infrastructure"
+    ],
+    [
+        "1. Water Reform",
+        "New South Wales",
+        "https://www.industry.nsw.gov.au/water/allocations-availability/allocations/statements",
+        200,
+        "OK",
+        "https://www.nsw.gov.au/departments-and-agencies/department-of-planning-housing-and-infrastructure"
+    ],
+    [
+        "1. Water Reform",
+        "New South Wales",
+        "http://www.sydneywater.com.au/SW/about-us/our-publications/Media/index.htm",
+        404,
+        "404",
+        "https://www.sydneywater.com.au/SW/about-us/our-publications/Media/index.htm"
+    ],
+    [
+        "1. Water Reform",
+        "New South Wales",
+        "https://www.hunterwater.com.au/",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "New South Wales",
+        "https://www.industry.nsw.gov.au/water/news",
+        200,
+        "OK",
+        "https://www.nsw.gov.au/departments-and-agencies/department-of-planning-housing-and-infrastructure"
+    ],
+    [
+        "1. Water Reform",
+        "New South Wales",
+        "https://www.mirrigation.com.au/",
+        200,
+        "OK",
+        "https://www.mirrigation.com.au/"
+    ],
+    [
+        "1. Water Reform",
+        "New South Wales",
+        "https://www.ipart.nsw.gov.au/Home/Media-Centre",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "Queensland",
+        "http://www.qldwater.com.au/qldwater-blog",
+        200,
+        "OK",
+        "https://qldwater.com.au/qldwater-blog"
+    ],
+    [
+        "1. Water Reform",
+        "Queensland",
+        "https://www.qldwater.com.au/e-flashes-2020",
+        404,
+        "404",
+        "https://qldwater.com.au/e-flashes-2020"
+    ],
+    [
+        "1. Water Reform",
+        "Queensland",
+        "https://www.dnrm.qld.gov.au/our-department/news",
+        403,
+        "BLOCKED",
+        "https://www.dnrm.qld.gov.au/our-department/news"
+    ],
+    [
+        "1. Water Reform",
+        "Queensland",
+        "https://www.sunwater.com.au/news/",
+        200,
+        "OK",
+        "https://www.sunwater.com.au/news-and-alerts/"
+    ],
+    [
+        "1. Water Reform",
+        "Queensland",
+        "http://seqwater.com.au/media/media-releases/",
+        200,
+        "OK",
+        "https://www.seqwater.com.au/news"
+    ],
+    [
+        "1. Water Reform",
+        "Queensland",
+        "http://seqwater.com.au/media",
+        200,
+        "OK",
+        "https://www.seqwater.com.au/news"
+    ],
+    [
+        "1. Water Reform",
+        "Queensland",
+        "https://www.urbanutilities.com.au/newsroom",
+        200,
+        "OK",
+        "https://www.urbanutilities.com.au/newsroom"
+    ],
+    [
+        "1. Water Reform",
+        "Western Australia",
+        "http://water.wa.gov.au/news/current-news",
+        200,
+        "OK",
+        "https://www.wa.gov.au/organisation/department-of-water-and-environmental-regulation"
+    ],
+    [
+        "1. Water Reform",
+        "Western Australia",
+        "http://www.water.wa.gov.au/search-publications",
+        200,
+        "OK",
+        "https://www.wa.gov.au/search-results.html?q=&facets[0]=Publication"
+    ],
+    [
+        "1. Water Reform",
+        "Western Australia",
+        "https://www.watercorporation.com.au/",
+        200,
+        "OK",
+        "https://www.watercorporation.com.au/"
+    ],
+    [
+        "1. Water Reform",
+        "Western Australia",
+        "https://www.der.wa.gov.au/about-us/media-statements",
+        200,
+        "OK",
+        "https://www.wa.gov.au/organisation/department-of-water-and-environmental-regulation/media-centre"
+    ],
+    [
+        "1. Water Reform",
+        "South Australia",
+        "https://www.environment.sa.gov.au/news-hub",
+        0,
+        "TIMEOUT",
+        ""
+    ],
+    [
+        "1. Water Reform",
+        "South Australia",
+        "http://www.sawater.com.au/about-us/media-centre",
+        200,
+        "OK",
+        "https://www.sawater.com.au/about-us/media/media-centre"
+    ],
+    [
+        "1. Water Reform",
+        "South Australia",
+        "http://www.escosa.sa.gov.au/news",
+        403,
+        "BLOCKED",
+        "https://www.escosa.sa.gov.au/news"
+    ],
+    [
+        "1. Water Reform",
+        "South Australia",
+        "https://www.waterconnect.sa.gov.au/River-Murray/SitePages/2020%20Flow%20Reports.aspx",
+        200,
+        "OK",
+        "https://www.waterconnect.sa.gov.au/River-Murray/SitePages/2020%20Flow%20Reports.aspx"
+    ],
+    [
+        "1. Water Reform",
+        "Tasmania",
+        "https://dpipwe.tas.gov.au/hot-topics",
+        404,
+        "404",
+        "https://nre.tas.gov.au/hot-topics"
+    ],
+    [
+        "1. Water Reform",
+        "Tasmania",
+        "http://www.taswater.com.au/News/TasWater-News/TasWater-News",
+        200,
+        "OK",
+        "https://www.taswater.com.au/news/newsroom"
+    ],
+    [
+        "1. Water Reform",
+        "Tasmania",
+        "http://www.taswater.com.au/News/Media-Releases",
+        404,
+        "404",
+        "https://www.taswater.com.au/News/Media-Releases"
+    ],
+    [
+        "1. Water Reform",
+        "Tasmania",
+        "http://www.economicregulator.tas.gov.au/about-us/media-releases",
+        200,
+        "OK",
+        "https://www.economicregulator.tas.gov.au/about-us/media-releases"
+    ],
+    [
+        "1. Water Reform",
+        "Tasmania",
+        "https://www.tasmanianirrigation.com.au/",
+        200,
+        "OK",
+        "https://tasmanianirrigation.com.au/"
+    ],
+    [
+        "1. Water Reform",
+        "Northern Territory",
+        "http://mediareleases.nt.gov.au/",
+        403,
+        "BLOCKED",
+        "https://mediareleases.nt.gov.au/"
+    ],
+    [
+        "1. Water Reform",
+        "Northern Territory",
+        "https://denr.nt.gov.au/news",
+        403,
+        "BLOCKED",
+        "https://denr.nt.gov.au/news"
+    ],
+    [
+        "1. Water Reform",
+        "Northern Territory",
+        "https://www.powerwater.com.au/about/news-and-media",
+        403,
+        "BLOCKED",
+        "https://www.powerwater.com.au/about/news-and-media"
+    ],
+    [
+        "1. Water Reform",
+        "Northern Territory",
+        "https://utilicom.nt.gov.au/news",
+        403,
+        "BLOCKED",
+        "https://utilicom.nt.gov.au/news"
+    ],
+    [
+        "9. General Water Quality and Sustainability",
+        "International",
+        "http://www.unwater.org/",
+        403,
+        "BLOCKED",
+        "https://www.unwater.org/"
+    ]
+]

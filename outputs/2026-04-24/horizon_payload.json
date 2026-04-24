@@ -1,0 +1,78 @@
+{
+  "run_date": "2026-04-24",
+  "sections": [
+    {
+      "section": "Water Reform",
+      "entries": [
+        {
+          "candidate_id": 2,
+          "draft_id": 1,
+          "section": "Water Reform",
+          "jurisdiction": "New South Wales",
+          "content_type": "simple_update",
+          "draft_text": "**First Nations programs**\nWaterNSW has made available an update - Together we will walk as one ((not stated in source)), which advises that \"[We acknowledge the very strong cultural and spiritual connection of Aboriginal communities to the lands, waters and rivers that we live and work upon and we are committed to improving how we engage with First Nations people across all aspects of our operations and projects.]\".\n*(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/first-nations-programs",
+          "source_label": "Water_Reform__New_South_Wales__url"
+        }
+      ]
+    },
+    {
+      "section": "Urban Water Supply and Use",
+      "entries": [
+        {
+          "candidate_id": 14,
+          "draft_id": 3,
+          "section": "Urban Water Supply and Use",
+          "jurisdiction": "New South Wales",
+          "content_type": "simple_update",
+          "draft_text": "**WaterNSW Regulation 2020 review**\nDCCEEW has made available an update - Opportunity to provide your feedback (16 February 2026), which advises that \"[The WaterNSW Regulation 2020 is being reviewed by the NSW Department of Climate Change, Energy, the Environment and Water (DCCEEW).]\".\n*(Source: DCCEEW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/the-flow/2026/review-of-the-waternsw-regulation-2020",
+          "source_label": "Water_Reform__New_South_Wales__url"
+        },
+        {
+          "candidate_id": 16,
+          "draft_id": 5,
+          "section": "Urban Water Supply and Use",
+          "jurisdiction": "New South Wales",
+          "content_type": "media_release",
+          "draft_text": "**WaterNSW dam safety project wins top AWA award**\nWaterNSW has announced that \"[An automated high-tech dam safety surveillance system installed at a critical Sydney water supply storage has won WaterNSW a major infrastructure award at the Australian Water Association (AWA) annual NSW awards.]\".\nAccording to WaterNSW, \"[This project harnesses the best of technology to upgrade our monitoring of Prospect from periodic inspections to round-the-clock scrutiny of the structure, to better meet our regulatory and business obligations and enhance dam safety practices.]\".\nWaterNSW's media release (18 MARCH 2026)\n*(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2026/waternsw-dam-safety-project-wins-top-awa-award",
+          "source_label": "Water_Reform__New_South_Wales__url"
+        }
+      ]
+    },
+    {
+      "section": "Rural Water Supply and Use",
+      "entries": [
+        {
+          "candidate_id": 10,
+          "draft_id": 2,
+          "section": "Rural Water Supply and Use",
+          "jurisdiction": "New South Wales",
+          "content_type": "simple_update",
+          "draft_text": "**Annual recording form**\nWaterNSW has made available an update - Annual recording form ((not stated in source)), which advises that \"[To comply with the Water Management (General) Regulation 2025, this form is to be completed by all water users whose work(s) don’t require a meter to record annual licensed and basic landholder rights (BLR) water take from a licensed work, and to confirm that cease to take conditions do not apply.]\".\n*(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/customer-services/metering/annual-recording-and-reporting-form",
+          "source_label": "Water_Reform__New_South_Wales__url"
+        }
+      ]
+    },
+    {
+      "section": "General Water Quality and Sustainability",
+      "entries": [
+        {
+          "candidate_id": 15,
+          "draft_id": 4,
+          "section": "General Water Quality and Sustainability",
+          "jurisdiction": "New South Wales",
+          "content_type": "simple_update",
+          "draft_text": "**Sign up to receive blue-green algae alerts on WaterInsights**\nWaterNSW has made available an update - Sign up to receive blue-green algae alerts on WaterInsights (1 APRIL 2026), which advises that \"[People can now sign up to receive alerts about potentially toxic blue-green algae in dams and rivers across the state, by creating a free account on WaterInsights.]\".\n*(Source: WaterNSW)*",
+          "source_url": "https://www.waternsw.com.au/community-news/media-releases/2026/sign-up-to-receive-blue-green-algae-alerts-on-waterinsights",
+          "source_label": "Water_Reform__New_South_Wales__url"
+        }
+      ]
+    }
+  ],
+  "upcoming_dates": "",
+  "previous_newsfeeds": "",
+  "copyright_footer": "© Legalwise Seminars Pty Ltd. All rights reserved."
+}
