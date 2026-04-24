@@ -820,30 +820,28 @@ def run(
     template_path: Path | None = None,
     output_path: Path | None = None,
 ) -> dict[str, int]:
-    """Entry point: build ``source_registry.json`` from all inputs.
+    """Entry point: build ``source_registry.json`` from ``data/local_articles/``.
 
-    Always merges two sources:
-      * Template file (if present) — URL registry discovered in ``reference/``.
-        Resolution: canonical ``Water_Newsfeed_Template.{md,html,htm}`` first,
-        then any other ``.md``/``.html``/``.htm`` file in that directory
-        (excluding the output-format exemplar ``Water_Newsfeed.md``).
-        HTML files are converted to markdown via ``markdownify`` on load.
-      * Local articles folder — .txt URL lists + .html/.htm/.md article files.
+    The source of truth is ``data/local_articles/`` — ``.txt`` URL lists,
+    ``.yaml`` group files (with optional ``requires_js`` per entry), and
+    ``.html`` / ``.md`` article files.
+
+    The ``reference/`` folder is NOT scanned automatically. If a caller
+    explicitly passes a ``template_path``, the referenced file is parsed
+    (supports ``.md``, ``.html``, ``.htm``; HTML is converted via
+    markdownify). Otherwise the registry is built solely from
+    ``local_articles/``.
 
     Returns ``{"sources": N, "examples": M, "local": L}``.
     """
     settings = get_settings()
-    if template_path is None:
-        template_path = _discover_template_path(settings.paths.reference)
     output_path = output_path or settings.paths.source_registry
 
+    # Explicit template_path wins — but we do NOT auto-discover from
+    # reference/ anymore. local_articles/ is the authoritative source.
     if template_path is not None and template_path.exists():
         registry = parse_template(template_path)
     else:
-        logger.warning(
-            "template not found — registry will only include local_articles entries",
-            reference_dir=str(settings.paths.reference),
-        )
         registry = SourceRegistry()
 
     # Always merge in local_articles/ entries (.txt URLs + .html/.md files)

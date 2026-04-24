@@ -1,127 +1,127 @@
-# Consolidated source registry for local-article discovery.
-#
-# Each group shares a (section, jurisdiction). Individual entries may set
-# ``requires_js: true`` (Stage 1/4 will use Playwright), ``sublink_patterns``
-# (regex list for depth-1 sublink fetches), and ``source_label`` (for UI).
-#
-# Per-entry fields:
-#   url               required
-#   requires_js       optional, bool, default false
-#   sublink_patterns  optional, list[regex], default []
-#   source_label      optional, str, defaults to filename stem
+# # Consolidated source registry for local-article discovery.
+# #
+# # Each group shares a (section, jurisdiction). Individual entries may set
+# # ``requires_js: true`` (Stage 1/4 will use Playwright), ``sublink_patterns``
+# # (regex list for depth-1 sublink fetches), and ``source_label`` (for UI).
+# #
+# # Per-entry fields:
+# #   url               required
+# #   requires_js       optional, bool, default false
+# #   sublink_patterns  optional, list[regex], default []
+# #   source_label      optional, str, defaults to filename stem
 
-groups:
+# groups:
 
-  # -----------------------------------------------------------------------
-  - section: Water Reform
-    jurisdiction: National
-    sources:
-      - url: http://www.bom.gov.au/water/
-        source_label: "Bureau of Meteorology — Water"
+#   # -----------------------------------------------------------------------
+#   - section: Water Reform
+#     jurisdiction: National
+#     sources:
+#       - url: http://www.bom.gov.au/water/
+#         source_label: "Bureau of Meteorology — Water"
 
-      - url: https://www.mdba.gov.au/news
-        source_label: "MDBA — News"
+#       - url: https://www.mdba.gov.au/news
+#         source_label: "MDBA — News"
 
-      - url: https://www.pc.gov.au/inquiries
-        source_label: "Productivity Commission — Inquiries"
+#       - url: https://www.pc.gov.au/inquiries
+#         source_label: "Productivity Commission — Inquiries"
 
-  # -----------------------------------------------------------------------
-  - section: Water Reform
-    jurisdiction: Victoria
-    sources:
-      - url: https://www.esc.vic.gov.au/water
-        source_label: "Essential Services Commission (Vic) — Water"
+#   # -----------------------------------------------------------------------
+#   - section: Water Reform
+#     jurisdiction: Victoria
+#     sources:
+#       - url: https://www.esc.vic.gov.au/water
+#         source_label: "Essential Services Commission (Vic) — Water"
 
-      - url: https://www.epa.vic.gov.au/about-epa/news-media-and-updates
-        source_label: "EPA Victoria — News and media"
+#       - url: https://www.epa.vic.gov.au/about-epa/news-media-and-updates
+#         source_label: "EPA Victoria — News and media"
 
-      - url: http://www.gazette.vic.gov.au/
-        source_label: "Victorian Government Gazette"
+#       - url: http://www.gazette.vic.gov.au/
+#         source_label: "Victorian Government Gazette"
 
-      - url: https://www.water.vic.gov.au/
-        requires_js: true
-        source_label: "DEECA Water Victoria"
-        sublink_patterns:
-          - "\\.pdf$"
-          - "/news/"
-          - "/publications/"
+#       - url: https://www.water.vic.gov.au/
+#         requires_js: true
+#         source_label: "DEECA Water Victoria"
+#         sublink_patterns:
+#           - "\\.pdf$"
+#           - "/news/"
+#           - "/publications/"
 
-      - url: https://www.vewh.vic.gov.au/news
-        requires_js: true
-        source_label: "Victorian Environmental Water Holder"
-        sublink_patterns:
-          - "\\.pdf$"
-          - "/news/"
+#       - url: https://www.vewh.vic.gov.au/news
+#         requires_js: true
+#         source_label: "Victorian Environmental Water Holder"
+#         sublink_patterns:
+#           - "\\.pdf$"
+#           - "/news/"
 
-  # -----------------------------------------------------------------------
-  - section: Water Reform
-    jurisdiction: New South Wales
-    sources:
-      - url: https://water.dpie.nsw.gov.au/
-        source_label: "NSW DCCEEW — Water"
+#   # -----------------------------------------------------------------------
+#   - section: Water Reform
+#     jurisdiction: New South Wales
+#     sources:
+#       - url: https://water.dpie.nsw.gov.au/
+#         source_label: "NSW DCCEEW — Water"
 
-      - url: https://www.epa.nsw.gov.au/
-        source_label: "NSW EPA"
+#       - url: https://www.epa.nsw.gov.au/
+#         source_label: "NSW EPA"
 
-      - url: https://www.waternsw.com.au/community-news/media-releases
-        source_label: "WaterNSW — Media releases"
+#       - url: https://www.waternsw.com.au/community-news/media-releases
+#         source_label: "WaterNSW — Media releases"
 
-      - url: https://www.nrar.nsw.gov.au/news-and-media
-        requires_js: true
-        source_label: "Natural Resources Access Regulator"
-        sublink_patterns:
-          - "\\.pdf$"
-          - "/news-and-media/"
+#       - url: https://www.nrar.nsw.gov.au/news-and-media
+#         requires_js: true
+#         source_label: "Natural Resources Access Regulator"
+#         sublink_patterns:
+#           - "\\.pdf$"
+#           - "/news-and-media/"
 
-      - url: https://www.ipart.nsw.gov.au/Home/Industries/Water
-        requires_js: true
-        source_label: "IPART — Water"
-        sublink_patterns:
-          - "\\.pdf$"
-          - "/Home/Industries/Water/"
+#       - url: https://www.ipart.nsw.gov.au/Home/Industries/Water
+#         requires_js: true
+#         source_label: "IPART — Water"
+#         sublink_patterns:
+#           - "\\.pdf$"
+#           - "/Home/Industries/Water/"
 
-  # -----------------------------------------------------------------------
-  - section: Urban Water Supply and Use
-    jurisdiction: Victoria
-    sources:
-      - url: https://www.melbournewater.com.au/
-        source_label: "Melbourne Water"
+#   # -----------------------------------------------------------------------
+#   - section: Urban Water Supply and Use
+#     jurisdiction: Victoria
+#     sources:
+#       - url: https://www.melbournewater.com.au/
+#         source_label: "Melbourne Water"
 
-      - url: https://www.yvw.com.au/
-        source_label: "Yarra Valley Water"
+#       - url: https://www.yvw.com.au/
+#         source_label: "Yarra Valley Water"
 
-      - url: https://southeastwater.com.au/
-        source_label: "South East Water"
+#       - url: https://southeastwater.com.au/
+#         source_label: "South East Water"
 
-      - url: https://coliban.com.au/
-        source_label: "Coliban Water"
+#       - url: https://coliban.com.au/
+#         source_label: "Coliban Water"
 
-      - url: https://www.gww.com.au/about-us/news
-        requires_js: true
-        source_label: "Greater Western Water"
-        sublink_patterns:
-          - "\\.pdf$"
-          - "/about-us/news/"
+#       - url: https://www.gww.com.au/about-us/news
+#         requires_js: true
+#         source_label: "Greater Western Water"
+#         sublink_patterns:
+#           - "\\.pdf$"
+#           - "/about-us/news/"
 
-      - url: https://www.barwonwater.vic.gov.au/news
-        requires_js: true
-        source_label: "Barwon Water"
-        sublink_patterns:
-          - "\\.pdf$"
-          - "/news/"
+#       - url: https://www.barwonwater.vic.gov.au/news
+#         requires_js: true
+#         source_label: "Barwon Water"
+#         sublink_patterns:
+#           - "\\.pdf$"
+#           - "/news/"
 
-  # -----------------------------------------------------------------------
-  - section: Water Rights
-    jurisdiction: National
-    sources:
-      - url: https://www.accc.gov.au/
-        source_label: "ACCC"
+#   # -----------------------------------------------------------------------
+#   - section: Water Rights
+#     jurisdiction: National
+#     sources:
+#       - url: https://www.accc.gov.au/
+#         source_label: "ACCC"
 
-      - url: https://www.mdba.gov.au/water-management/water-markets-and-trade
-        source_label: "MDBA — Water markets and trade"
+#       - url: https://www.mdba.gov.au/water-management/water-markets-and-trade
+#         source_label: "MDBA — Water markets and trade"
 
-      - url: http://www.bom.gov.au/water/market/
-        source_label: "BoM — Water Market Information"
+#       - url: http://www.bom.gov.au/water/market/
+#         source_label: "BoM — Water Market Information"
 
-      - url: https://www.mdba.gov.au/basin-plan
-        source_label: "MDBA — Basin Plan"
+#       - url: https://www.mdba.gov.au/basin-plan
+#         source_label: "MDBA — Basin Plan"

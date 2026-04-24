@@ -1,0 +1,5 @@
+# Single-URL test file.
+# Filename: Water_Reform__New_South_Wales__url.txt
+#   → section="Water Reform", jurisdiction="New South Wales"
+
+https://www.waternsw.com.au/community-news/media-releases
