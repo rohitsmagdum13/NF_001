@@ -19,6 +19,7 @@ dependencies = [
 
     # Markdown / parsing
     "markdown-it-py>=3.0.0",
+    "markdownify>=1.0.0",
 
     # PDF
     "pdfplumber>=0.11.0",
@@ -105,6 +106,7 @@ files = ["src"]
 module = [
     "lxml",
     "lxml.*",
+    "markdownify",
     "boto3",
     "boto3.*",
     "botocore",

@@ -54,9 +54,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import dateparser
+import yaml
 from loguru import logger
 from markdown_it import MarkdownIt
 from markdown_it.token import Token
+from markdownify import markdownify as _html_to_md
 from selectolax.parser import HTMLParser
 
 from newsfeed.config import get_settings
@@ -75,6 +77,24 @@ _HINT_RE = re.compile(r"^([^_].+?)__([^_].+?)__(.+)$")
 _URL_TRAILING_PUNCT = ".,;:)"
 
 STATE_ABBREVS: frozenset[str] = frozenset({"VIC", "NSW", "QLD", "WA", "SA", "TAS", "ACT", "NT"})
+
+# Extensions we treat as HTML when loading the template file. HTML templates are
+# converted to Markdown via markdownify before being handed to markdown-it-py —
+# this keeps the existing token state machine unchanged.
+_HTML_SUFFIXES: frozenset[str] = frozenset({".html", ".htm"})
+
+# Template discovery. Preferred extensions in order — markdown first (native,
+# no conversion step), then HTML. The glob fallback picks any file with these
+# extensions in reference/, excluding known non-template files.
+_TEMPLATE_EXTENSIONS: tuple[str, ...] = (".md", ".html", ".htm")
+
+# Files in reference/ that are NOT URL-registry templates and must not be parsed
+# as one. ``Water_Newsfeed.md`` is the OUTPUT format exemplar (used by prompts).
+_NON_TEMPLATE_FILENAMES: frozenset[str] = frozenset({"water_newsfeed.md"})
+
+# Canonical template base name — checked first for backward compatibility
+# before the glob discovery fallback kicks in.
+_CANONICAL_TEMPLATE_STEM: str = "Water_Newsfeed_Template"
 
 
 # --- Parser state ---
@@ -136,6 +156,82 @@ def _clean_url(raw: str) -> str:
     return raw.rstrip(_URL_TRAILING_PUNCT)
 
 
+def _discover_template_path(ref_dir: Path) -> Path | None:
+    """Locate the URL-registry template inside ``ref_dir``.
+
+    Resolution order (first match wins):
+
+      1. Canonical name ``Water_Newsfeed_Template.{md,html,htm}`` — preserved
+         for backward compatibility with the committed reference/.
+      2. Any other ``*.md`` / ``*.html`` / ``*.htm`` file in ``ref_dir``,
+         excluding known non-template files like ``Water_Newsfeed.md``
+         (which is the output-format exemplar, not a source list).
+
+    Returns ``None`` when nothing suitable is found; the caller then
+    degrades gracefully to a ``local_articles``-only registry.
+
+    Extensions are tried in ``_TEMPLATE_EXTENSIONS`` order — markdown first
+    (native, no conversion), then HTML. Within an extension, files are
+    sorted alphabetically for deterministic results across machines.
+    """
+    if not ref_dir.exists():
+        logger.warning("reference directory not found", path=str(ref_dir))
+        return None
+
+    # 1. Canonical path — fast path, preserves pre-existing behaviour.
+    for ext in _TEMPLATE_EXTENSIONS:
+        canonical = ref_dir / f"{_CANONICAL_TEMPLATE_STEM}{ext}"
+        if canonical.exists():
+            return canonical
+
+    # 2. Glob fallback — any template-shaped file, excluding known non-templates.
+    matches: list[Path] = []
+    for ext in _TEMPLATE_EXTENSIONS:
+        for path in sorted(ref_dir.glob(f"*{ext}")):
+            if path.name.lower() in _NON_TEMPLATE_FILENAMES:
+                continue
+            matches.append(path)
+
+    if not matches:
+        return None
+
+    chosen = matches[0]
+    if len(matches) > 1:
+        logger.warning(
+            "multiple template candidates found in reference/ — using first",
+            chosen=str(chosen),
+            others=[str(p) for p in matches[1:]],
+        )
+    else:
+        logger.info("discovered template via glob", path=str(chosen))
+    return chosen
+
+
+def _load_template_as_markdown(path: Path) -> str:
+    """Load the template file as markdown text.
+
+    Markdown files are returned verbatim. HTML files are converted via
+    ``markdownify`` so headings, bold labels, bullet lists, and link URLs
+    map cleanly onto the markdown-it token stream the parser already
+    understands.
+
+    Heading style ``ATX`` produces ``## Section`` / ``### Jurisdiction``
+    (not SETEXT underlines), which is what ``SECTION_HEADING_RE`` expects.
+    Scripts and styles are stripped to avoid noise tokens in the output.
+    """
+    text = path.read_text(encoding="utf-8")
+    if path.suffix.lower() in _HTML_SUFFIXES:
+        md_text: str = _html_to_md(text, heading_style="ATX", strip=["script", "style"])
+        logger.info(
+            "converted HTML template to markdown",
+            path=str(path),
+            html_bytes=len(text),
+            md_bytes=len(md_text),
+        )
+        return md_text
+    return text
+
+
 # --- Public API ---
 
 
@@ -162,7 +258,7 @@ def parse_template(  # noqa: PLR0912, PLR0915 — token state machine, splitting
     if not sections or not jurisdictions:
         raise ValueError("settings.sections and settings.jurisdictions must be populated")
 
-    text = template_path.read_text(encoding="utf-8")
+    text = _load_template_as_markdown(template_path)
     tokens = MarkdownIt().parse(text)
 
     sources: list[SourceEntry] = []
@@ -330,6 +426,171 @@ def _entries_from_txt_file(
                     source_label=path.stem,
                 )
             )
+    return entries
+
+
+def _build_yaml_entry(
+    item: dict[str, object],
+    default_section: str | None,
+    default_jurisdiction: str | None,
+    path: Path,
+    valid_sections: list[str],
+    valid_jurisdictions: list[str],
+) -> SourceEntry | None:
+    """Construct a SourceEntry from one YAML mapping, or None if invalid.
+
+    Resolution for section/jurisdiction (first non-empty wins):
+      1. entry-level ``section`` / ``jurisdiction``
+      2. ``default_section`` / ``default_jurisdiction`` (group or filename-derived)
+      3. ``valid_sections[0]`` / ``valid_jurisdictions[0]`` (last-resort fallback)
+
+    Invalid section or jurisdiction values trigger a WARNING and the entry
+    is skipped — prevents a typo like ``Water Reforms`` from silently
+    polluting the registry with an untracked section.
+    """
+    url_raw = item.get("url")
+    if not isinstance(url_raw, str):
+        return None
+    url = url_raw.strip().rstrip(".,;:)")
+    if not url:
+        return None
+
+    section = str(item.get("section") or default_section or valid_sections[0])
+    jurisdiction = str(item.get("jurisdiction") or default_jurisdiction or valid_jurisdictions[0])
+
+    if section not in valid_sections:
+        logger.warning(
+            "yaml entry has invalid section — skipped",
+            path=str(path), url=url, section=section,
+        )
+        return None
+    if jurisdiction not in valid_jurisdictions:
+        logger.warning(
+            "yaml entry has invalid jurisdiction — skipped",
+            path=str(path), url=url, jurisdiction=jurisdiction,
+        )
+        return None
+
+    sublink_patterns_raw = item.get("sublink_patterns") or []
+    sublink_patterns = (
+        [str(p) for p in sublink_patterns_raw if isinstance(p, str)]
+        if isinstance(sublink_patterns_raw, list)
+        else []
+    )
+
+    return SourceEntry(
+        source_id=_source_id(section, jurisdiction, url),
+        source_type="url",
+        url=url,
+        section=section,
+        jurisdiction=jurisdiction,
+        source_label=str(item.get("source_label") or path.stem),
+        requires_js=bool(item.get("requires_js", False)),
+        sublink_patterns=sublink_patterns,
+    )
+
+
+def _entries_from_yaml_file(
+    path: Path,
+    valid_sections: list[str],
+    valid_jurisdictions: list[str],
+) -> list[SourceEntry]:
+    """Parse a .yaml/.yml file with per-URL source configuration.
+
+    Two structural forms are supported:
+
+    (1) **Flat** — all entries share the filename-derived section/jurisdiction::
+
+            # filename: Section__Jurisdiction__slug.yaml
+            sources:
+              - url: https://example.gov.au/news
+                requires_js: true
+
+    (2) **Grouped** — one file with multiple (section, jurisdiction) groups::
+
+            groups:
+              - section: Water Reform
+                jurisdiction: Victoria
+                sources:
+                  - url: https://example1.vic.gov.au/
+                  - url: https://example2.vic.gov.au/
+                    requires_js: true
+              - section: Water Rights
+                jurisdiction: National
+                sources:
+                  - url: https://example.gov.au/
+
+    Any entry may override with its own ``section`` / ``jurisdiction``.
+
+    Per-entry fields:
+        url               (required)
+        requires_js       (optional, bool; default false)
+        sublink_patterns  (optional, list[regex]; default [])
+        source_label      (optional, str; defaults to filename stem)
+        section           (optional, str; overrides group/filename defaults)
+        jurisdiction      (optional, str; overrides group/filename defaults)
+
+    Malformed files log a WARNING and return ``[]``. Entries missing a
+    valid ``url`` are silently skipped.
+    """
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except yaml.YAMLError as exc:
+        logger.warning("yaml parse failed", path=str(path), error=str(exc))
+        return []
+
+    if not isinstance(data, dict):
+        logger.warning(
+            "yaml file must be a mapping with 'sources' or 'groups'",
+            path=str(path),
+        )
+        return []
+
+    filename_section, filename_juris = _hints_from_stem(
+        path.stem, valid_sections, valid_jurisdictions
+    )
+    entries: list[SourceEntry] = []
+
+    # Form 2 — grouped
+    groups_raw = data.get("groups")
+    if isinstance(groups_raw, list):
+        for grp in groups_raw:
+            if not isinstance(grp, dict):
+                continue
+            grp_section = str(grp.get("section") or "") or filename_section
+            grp_juris = str(grp.get("jurisdiction") or "") or filename_juris
+            grp_sources = grp.get("sources")
+            if not isinstance(grp_sources, list):
+                continue
+            for item in grp_sources:
+                if not isinstance(item, dict):
+                    continue
+                entry = _build_yaml_entry(
+                    item, grp_section, grp_juris,
+                    path, valid_sections, valid_jurisdictions,
+                )
+                if entry is not None:
+                    entries.append(entry)
+        return entries
+
+    # Form 1 — flat
+    sources_raw = data.get("sources")
+    if isinstance(sources_raw, list):
+        for item in sources_raw:
+            if not isinstance(item, dict):
+                continue
+            entry = _build_yaml_entry(
+                item, filename_section, filename_juris,
+                path, valid_sections, valid_jurisdictions,
+            )
+            if entry is not None:
+                entries.append(entry)
+        return entries
+
+    logger.warning(
+        "yaml file must have 'groups' or 'sources' at top level",
+        path=str(path),
+    )
     return entries
 
 
@@ -517,10 +778,11 @@ def _entries_from_local_articles(
 ) -> list[SourceEntry]:
     """Scan data/local_articles/ and return a flat list of SourceEntry.
 
-    Handles three file types:
-      * .txt  → one entry per URL line
-      * .html, .htm → single-article entry pointing at the file
-      * .md  → single-article entry pointing at the file
+    Handles four file types:
+      * .txt          → one entry per URL line (plain URL list)
+      * .yaml / .yml  → richer per-URL config (requires_js, sublink_patterns, …)
+      * .html, .htm   → single-article entry pointing at the file
+      * .md           → single-article entry pointing at the file
     """
     if not local_articles_path.exists():
         logger.warning("local_articles folder not found", path=str(local_articles_path))
@@ -537,6 +799,8 @@ def _entries_from_local_articles(
 
         if suffix == ".txt":
             entries.extend(_entries_from_txt_file(path, valid_sections, valid_jurisdictions))
+        elif suffix in (".yaml", ".yml"):
+            entries.extend(_entries_from_yaml_file(path, valid_sections, valid_jurisdictions))
         elif suffix in (".html", ".htm", ".md"):
             entry = _entry_from_local_file(path, valid_sections, valid_jurisdictions)
             if entry:
@@ -559,21 +823,26 @@ def run(
     """Entry point: build ``source_registry.json`` from all inputs.
 
     Always merges two sources:
-      * Template file (if present) — URL registry from Water_Newsfeed_Template.md
-      * Local articles folder — .txt URL lists + .html/.htm/.md article files
+      * Template file (if present) — URL registry discovered in ``reference/``.
+        Resolution: canonical ``Water_Newsfeed_Template.{md,html,htm}`` first,
+        then any other ``.md``/``.html``/``.htm`` file in that directory
+        (excluding the output-format exemplar ``Water_Newsfeed.md``).
+        HTML files are converted to markdown via ``markdownify`` on load.
+      * Local articles folder — .txt URL lists + .html/.htm/.md article files.
 
     Returns ``{"sources": N, "examples": M, "local": L}``.
     """
     settings = get_settings()
-    template_path = template_path or (settings.paths.reference / "Water_Newsfeed_Template.md")
+    if template_path is None:
+        template_path = _discover_template_path(settings.paths.reference)
     output_path = output_path or settings.paths.source_registry
 
-    if template_path.exists():
+    if template_path is not None and template_path.exists():
         registry = parse_template(template_path)
     else:
         logger.warning(
             "template not found — registry will only include local_articles entries",
-            template=str(template_path),
+            reference_dir=str(settings.paths.reference),
         )
         registry = SourceRegistry()
 

@@ -47,8 +47,8 @@ bedrock:
   quality_model: anthropic.claude-3-5-sonnet-20241022-v2:0
 
 openai:
-  cheap_model: gpt-4o-mini
-  quality_model: gpt-4o
+  cheap_model: gpt-5.4
+  quality_model: gpt-5.4
 
 sections:
   - Water Reform
