@@ -8,7 +8,7 @@
 
 1. Water Reform
 2. Urban Water Supply and Use
-3. Rural Water Supply and Use
+3. Water Rights
 4. General Water Quality and Sustainability
 5. Upcoming Dates
 6. Previous Water Newsfeeds
@@ -31,9 +31,9 @@ WaterNSW has made available an update - Together we will walk as one ((not state
 
 ### New South Wales - Urban Water Supply and Use
 
-**WaterNSW Regulation 2020 review**
-DCCEEW has made available an update - Opportunity to provide your feedback (16 February 2026), which advises that "[The WaterNSW Regulation 2020 is being reviewed by the NSW Department of Climate Change, Energy, the Environment and Water (DCCEEW).]".
-*(Source: DCCEEW)*
+**Regulation review**
+WaterNSW has made available an update - Opportunity to provide your feedback (16 February 2026), which advises that "[The WaterNSW Regulation 2020 is being reviewed by the NSW Department of Climate Change, Energy, the Environment and Water (DCCEEW).]".
+*(Source: WaterNSW)*
 
 *https://www.waternsw.com.au/community-news/the-flow/2026/review-of-the-waternsw-regulation-2020*
 
@@ -47,12 +47,12 @@ WaterNSW's media release (18 MARCH 2026)
 
 ---
 
-## 3. Rural Water Supply and Use
+## 3. Water Rights
 
-### New South Wales - Rural Water Supply and Use
+### New South Wales - Water Rights
 
-**Annual recording form**
-WaterNSW has made available an update - Annual recording form ((not stated in source)), which advises that "[To comply with the Water Management (General) Regulation 2025, this form is to be completed by all water users whose work(s) don’t require a meter to record annual licensed and basic landholder rights (BLR) water take from a licensed work, and to confirm that cease to take conditions do not apply.]".
+**Annual recording form for non-metered works**
+WaterNSW has made available an update - annual recording form requirements (not stated in source), which advises that "[To comply with the Water Management (General) Regulation 2025, this form is to be completed by all water users whose work(s) don’t require a meter to record annual licensed and basic landholder rights (BLR) water take from a licensed work, and to confirm that cease to take conditions do not apply.]".
 *(Source: WaterNSW)*
 
 *https://www.waternsw.com.au/customer-services/metering/annual-recording-and-reporting-form*

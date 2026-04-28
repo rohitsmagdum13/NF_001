@@ -54,6 +54,7 @@ from sqlalchemy import select
 from newsfeed.config import get_settings
 from newsfeed.db import Candidate, ContextBundle, get_session
 from newsfeed.schemas import SourceEntry, SourceRegistry
+from newsfeed.structured_extract import StructuredArticle, extract_structured
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -202,21 +203,31 @@ async def _collect_sublinks(
     patterns: list[str],
     client: httpx.AsyncClient,
     cache_dir: Path,
+    sem: asyncio.Semaphore,
 ) -> list[dict[str, str]]:
-    """Fetch and extract text from sublinks found in html (depth=1)."""
-    sublinks: list[dict[str, str]] = []
-    for sub_url in _find_sublinks(html, base_url, patterns):
+    """Fetch and extract text from sublinks found in html (depth=1).
+
+    Sublinks are fetched concurrently, each acquiring ``sem`` only for the
+    network call so we don't block parent slots.
+    """
+    urls = _find_sublinks(html, base_url, patterns)
+
+    async def _one(sub_url: str) -> dict[str, str] | None:
         sub_cached = _cache_path(cache_dir, sub_url, ext="html")
         if sub_cached.exists():
             sub_html: str | None = sub_cached.read_text(encoding="utf-8", errors="replace")
         else:
-            sub_html = await _fetch_url(client, sub_url)
+            async with sem:
+                sub_html = await _fetch_url(client, sub_url)
             if sub_html:
                 sub_cached.parent.mkdir(parents=True, exist_ok=True)
                 sub_cached.write_text(sub_html, encoding="utf-8")
-        if sub_html:
-            sublinks.append({"url": sub_url, "text": _extract_text(sub_html)})
-    return sublinks
+        if not sub_html:
+            return None
+        return {"url": sub_url, "text": _extract_text(sub_html)}
+
+    results = await asyncio.gather(*[_one(u) for u in urls])
+    return [r for r in results if r is not None]
 
 
 def _save_bundle(
@@ -224,8 +235,14 @@ def _save_bundle(
     main_text: str,
     sublinks: list[dict[str, str]],
     metadata: dict[str, Any],
+    structured: StructuredArticle | None,
 ) -> None:
-    """Upsert a ContextBundle and mark the candidate as 'fetched'."""
+    """Upsert a ContextBundle and mark the candidate as 'fetched'.
+
+    When ``structured`` is provided, also backfills the candidate's
+    ``pub_date`` and ``title`` if they were missing — fixing many of
+    the "no date" warnings flagged in Stage 1.
+    """
     with get_session() as session:
         existing = session.execute(
             select(ContextBundle).where(ContextBundle.candidate_id == candidate_id)
@@ -251,6 +268,16 @@ def _save_bundle(
         cand = session.get(Candidate, candidate_id)
         if cand:
             cand.status = "fetched"
+            if structured is not None:
+                if cand.pub_date is None and structured.date_published is not None:
+                    cand.pub_date = structured.date_published
+                    logger.debug(
+                        "backfilled pub_date from structured data",
+                        candidate_id=candidate_id,
+                        date=structured.date_published.isoformat(),
+                    )
+                if (not cand.title) and structured.title:
+                    cand.title = structured.title
 
 
 async def _process_candidate(
@@ -268,24 +295,47 @@ async def _process_candidate(
 
     async with sem:
         html = await _acquire_html(candidate, source, client, cache_dir)
-        if not html:
-            logger.warning("no content fetched", candidate_id=candidate.id, url=candidate.url)
-            return "filtered"
 
-        main_text = _extract_text(html)
-        sublinks = (
-            await _collect_sublinks(html, candidate.url, sublink_patterns, client, cache_dir)
-            if candidate.url
-            else []
-        )
-        metadata: dict[str, Any] = {
-            "fetched_at": _utcnow().isoformat(),
-            "source_url": candidate.url,
-            "source_type": candidate.source_type,
-            "section_hint": candidate.section_hint,
-            "jurisdiction_hint": candidate.jurisdiction_hint,
+    if not html:
+        logger.warning("no content fetched", candidate_id=candidate.id, url=candidate.url)
+        return "filtered"
+
+    structured = extract_structured(html)
+
+    # Prefer structured articleBody when trafilatura's extraction is thin;
+    # publisher-supplied body tends to be cleaner than scraped prose.
+    trafi_text = _extract_text(html)
+    if structured and structured.article_body and len(structured.article_body) > len(trafi_text):
+        main_text = structured.article_body
+    else:
+        main_text = trafi_text
+
+    sublinks = (
+        await _collect_sublinks(html, candidate.url, sublink_patterns, client, cache_dir, sem)
+        if candidate.url
+        else []
+    )
+    metadata: dict[str, Any] = {
+        "fetched_at": _utcnow().isoformat(),
+        "source_url": candidate.url,
+        "source_type": candidate.source_type,
+        "section_hint": candidate.section_hint,
+        "jurisdiction_hint": candidate.jurisdiction_hint,
+    }
+    if structured is not None:
+        metadata["structured"] = {
+            "title": structured.title,
+            "description": structured.description,
+            "date_published": (
+                structured.date_published.isoformat() if structured.date_published else None
+            ),
+            "date_modified": (
+                structured.date_modified.isoformat() if structured.date_modified else None
+            ),
+            "author": structured.author,
+            "publisher": structured.publisher,
         }
-        _save_bundle(candidate.id, main_text, sublinks, metadata)
+    _save_bundle(candidate.id, main_text, sublinks, metadata, structured)
 
     return "fetched"
 

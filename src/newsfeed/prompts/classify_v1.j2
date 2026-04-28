@@ -13,8 +13,20 @@ decision seriously — it matters more than section or jurisdiction.
 ===========================================================================
 CONTEXT
 ===========================================================================
-Section hint      : {{ section_hint }}           (from the source registry — may be wrong)
-Jurisdiction hint : {{ jurisdiction_hint }}      (from the source registry — may be wrong)
+Section hint      : {{ section_hint }}
+Jurisdiction hint : {{ jurisdiction_hint }}
+Hint strength     : {{ hint_strength }}
+{% if hint_strength == "strong" %}
+The source for this article is a single-purpose regulator. The hints
+above are AUTHORITATIVE: use them as your section + jurisdiction
+unless the article's content clearly contradicts them (e.g. an ACCC
+ruling published on a state regulator's site). When you accept the
+hints, set confidence to at least 0.85.
+{% else %}
+The hints above came from the source registry and MAY be wrong. Treat
+them as one input among several — your judgement on the article text
+takes priority.
+{% endif %}
 
 --- ARTICLE TEXT (truncated to {{ article_text | length }} chars) ---
 {{ article_text }}

@@ -478,6 +478,13 @@ def _build_yaml_entry(
         else []
     )
 
+    section_priority_raw = item.get("section_priority", "weak")
+    section_priority = (
+        str(section_priority_raw).lower()
+        if section_priority_raw in ("strong", "weak")
+        else "weak"
+    )
+
     return SourceEntry(
         source_id=_source_id(section, jurisdiction, url),
         source_type="url",
@@ -487,6 +494,7 @@ def _build_yaml_entry(
         source_label=str(item.get("source_label") or path.stem),
         requires_js=bool(item.get("requires_js", False)),
         sublink_patterns=sublink_patterns,
+        section_priority=section_priority,  # type: ignore[arg-type]
     )
 
 

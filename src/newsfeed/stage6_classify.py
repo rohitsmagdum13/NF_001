@@ -120,6 +120,7 @@ def _build_prompt(
     article_text: str,
     section_hint: str,
     jurisdiction_hint: str,
+    hint_strength: str,
     examples: list[ExampleTemplate],
 ) -> str:
     settings = get_settings()
@@ -133,6 +134,7 @@ def _build_prompt(
         article_text=article_text[:_MAX_TEXT_CHARS],
         section_hint=section_hint,
         jurisdiction_hint=jurisdiction_hint,
+        hint_strength=hint_strength,
         sections=settings.sections,
         jurisdictions=settings.jurisdictions,
         examples=examples[:_MAX_EXAMPLES],
@@ -148,6 +150,7 @@ def _classify_one(
     candidate: Candidate,
     bundle: ContextBundle,
     examples: list[ExampleTemplate],
+    hint_strength: str,
     llm: LLMClient,
     run_id: str,
 ) -> ClassifyResult | None:
@@ -161,6 +164,7 @@ def _classify_one(
         article_text=article_text,
         section_hint=candidate.section_hint or "",
         jurisdiction_hint=candidate.jurisdiction_hint or "",
+        hint_strength=hint_strength,
         examples=examples,
     )
 
@@ -217,9 +221,15 @@ def run(run_id: str | None = None) -> dict[str, int]:
     classified_count = 0
     review_count = 0
     threshold = settings.pipeline.confidence_threshold
+    priority_by_source: dict[str, str] = {
+        s.source_id: s.section_priority for s in registry.sources
+    }
 
     for candidate, bundle in rows:
-        result = _classify_one(candidate, bundle, registry.examples, llm, run_id)
+        hint_strength = priority_by_source.get(candidate.source_id, "weak")
+        result = _classify_one(
+            candidate, bundle, registry.examples, hint_strength, llm, run_id
+        )
 
         if result is None or result.confidence < threshold:
             with get_session() as session:

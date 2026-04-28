@@ -36,6 +36,10 @@ class PipelineConfig(BaseModel):
     fetch_concurrency: int = Field(default=8, ge=1, le=64)
     http_timeout_seconds: int = Field(default=15, ge=1, le=120)
     content_nav_patterns: list[str] = Field(default_factory=list)
+    # When True, Stage 1 keeps only URLs that look like individual articles
+    # (date in path, multi-word slug, or 3+ path segments). Filters out
+    # category landing pages, /about, /contact, pagination, etc.
+    article_shape_filter: bool = True
 
 
 class PathsConfig(BaseModel):

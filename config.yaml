@@ -3,8 +3,11 @@ pipeline:
   max_sublink_depth: 1
   confidence_threshold: 0.7
   cache_retention_days: 28
-  fetch_concurrency: 8
-  http_timeout_seconds: 15
+  fetch_concurrency: 16
+  http_timeout_seconds: 10
+  # Filter discovered URLs to keep only article-shaped ones (recommended).
+  # Set to false to disable if your sources use unconventional URL structures.
+  article_shape_filter: true
   # Nav link text patterns that indicate a content listing page.
   # Stage 1 scans <nav> for links whose text matches any of these (case-insensitive).
   # Matched links are crawled as listing pages; unmatched nav links are ignored.

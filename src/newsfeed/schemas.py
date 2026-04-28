@@ -11,6 +11,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 SourceType = Literal["url", "html", "md", "pdf"]
+SectionPriority = Literal["weak", "strong"]
 
 
 class SourceEntry(BaseModel):
@@ -37,6 +38,12 @@ class SourceEntry(BaseModel):
     # has fallbacks when the raw HTML/MD has poor or missing structure.
     title_hint: str | None = None
     pub_date_hint: str | None = None  # ISO 8601 date or datetime
+    # How strongly Stage 6 should trust this source's section/jurisdiction hints.
+    # "strong" → use as the default classification unless content clearly contradicts.
+    # "weak"   → treat as a hint only (legacy behaviour).
+    # Use "strong" for single-purpose regulators (e.g. WaterNSW, MDBA, IPART)
+    # whose news output reliably maps to one section + one jurisdiction.
+    section_priority: SectionPriority = "weak"
 
 
 class ExampleTemplate(BaseModel):

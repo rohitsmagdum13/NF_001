@@ -59,8 +59,32 @@ from newsfeed.schemas import SourceEntry, SourceRegistry
 _USER_AGENT = "NewsfeedBot/1.0 (regulatory-newsfeed-poc)"
 _URL_LINE_RE = re.compile(r"https?://[^\s<>)\]\"']+")
 _RSS_PROBE_PATHS = ("/feed", "/rss", "/feed.xml", "/rss.xml", "/atom.xml", "/news/feed")
+_SITEMAP_PROBE_PATHS = (
+    "/sitemap.xml",
+    "/sitemap_index.xml",
+    "/sitemap-index.xml",
+    "/sitemap-news.xml",
+    "/news-sitemap.xml",
+    "/news/sitemap.xml",
+)
+_MAX_SITEMAP_CHILDREN = 10  # cap recursion into <sitemapindex>
 _MIN_TITLE_LEN = 10  # characters — filters out navigation links
 _MAX_HTML_LINKS = 200  # cap per listing page
+
+# --- Article-shape URL heuristic (Strategy B) ---
+_ARTICLE_DATE_RE = re.compile(r"/(?:19|20)\d{2}(?:[/_-]|$)")
+_PAGINATION_QUERY_RE = re.compile(r"[?&](page|p|start|offset)=\d+", re.IGNORECASE)
+_STATIC_EXT_RE = re.compile(r"\.(?:jpg|jpeg|png|gif|svg|css|js|ico|woff2?)\b", re.IGNORECASE)
+_NON_ARTICLE_LAST_SEGMENTS = frozenset({
+    "about", "about-us", "contact", "contact-us", "privacy", "privacy-policy",
+    "terms", "terms-of-use", "terms-and-conditions", "login", "logout",
+    "signin", "sign-in", "signup", "sign-up", "register", "search",
+    "subscribe", "unsubscribe", "careers", "jobs", "faq", "faqs",
+    "help", "support", "legal", "cookies", "cookie-policy", "accessibility",
+    "sitemap", "feed", "rss", "home", "index", "media", "news",
+    "publications", "events", "consultations", "alerts", "notices",
+    "bulletins", "media-releases", "press-releases", "newsroom",
+})
 _DATE_SETTINGS: dict[str, Any] = {
     "RETURN_AS_TIMEZONE_AWARE": True,
     "PREFER_DAY_OF_MONTH": "first",
@@ -90,6 +114,52 @@ _ARTICLE_LINK_SELECTORS = [
     ".listing-item a[href]",
     ".entry-title a[href]",
 ]
+
+
+# ---------------------------------------------------------------------------
+# Article-shape heuristic
+# ---------------------------------------------------------------------------
+
+
+def _looks_like_article(url: str) -> bool:
+    """Return True if a URL is shaped like an individual article.
+
+    Positive signals (any one accepts):
+      • Date-shaped path segment, e.g. ``/2024/``, ``/2024-04/``.
+      • Last segment is a hyphenated slug ≥ 15 chars.
+      • Path has 3+ segments and the last segment is non-trivial (≥ 8 chars).
+
+    Negative signals (any one rejects):
+      • Static-asset extension (.jpg, .css, .xml, etc.).
+      • Pagination/listing query params (?page=2, ?p=3, ?offset=20).
+      • Last path segment matches a known landing-page name (about, contact,
+        media-releases, newsroom, etc.).
+    """
+    parsed = urlparse(url)
+    path = parsed.path.rstrip("/").lower()
+    if not path or path == "/":
+        return False
+    if _STATIC_EXT_RE.search(path):
+        return False
+    if _PAGINATION_QUERY_RE.search(parsed.query):
+        return False
+
+    segments = [s for s in path.split("/") if s]
+    if not segments:
+        return False
+    last = segments[-1]
+    if last in _NON_ARTICLE_LAST_SEGMENTS:
+        return False
+
+    # Positive signals
+    if _ARTICLE_DATE_RE.search(path):
+        return True
+    if "-" in last and len(last) >= 15:
+        return True
+    if len(segments) >= 3 and len(last) >= 8:
+        return True
+
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -204,17 +274,21 @@ def _items_from_feed(feed: Any, source: SourceEntry, cutoff: datetime) -> list[_
 def _items_from_sitemap(
     xml_text: str, source: SourceEntry, cutoff: datetime
 ) -> list[_DiscoveredItem]:
-    """Parse sitemap.xml text, apply cutoff, return items."""
+    """Parse sitemap.xml ``<urlset>`` text, apply cutoff + article-shape filter."""
     try:
         root = etree.fromstring(xml_text.encode("utf-8"))
     except etree.XMLSyntaxError:
         return []
     ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    apply_filter = get_settings().pipeline.article_shape_filter
     items: list[_DiscoveredItem] = []
     for url_el in root.findall(".//sm:url", ns):
         loc = url_el.findtext("sm:loc", namespaces=ns)
         lastmod = url_el.findtext("sm:lastmod", namespaces=ns)
         if not loc:
+            continue
+        loc = loc.strip()
+        if apply_filter and not _looks_like_article(loc):
             continue
         pub_date = _parse_date(lastmod.strip()) if lastmod else None
         date_missing = pub_date is None
@@ -222,7 +296,7 @@ def _items_from_sitemap(
             continue
         items.append(
             _DiscoveredItem(
-                url=loc.strip(),
+                url=loc,
                 title=None,
                 pub_date=pub_date,
                 date_missing=date_missing,
@@ -230,6 +304,20 @@ def _items_from_sitemap(
             )
         )
     return items
+
+
+def _children_from_sitemap_index(xml_text: str) -> list[str]:
+    """Return child sitemap URLs from a ``<sitemapindex>`` document, or []."""
+    try:
+        root = etree.fromstring(xml_text.encode("utf-8"))
+    except etree.XMLSyntaxError:
+        return []
+    ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    return [
+        el.text.strip()
+        for el in root.findall(".//sm:sitemap/sm:loc", ns)
+        if el.text and el.text.strip()
+    ]
 
 
 def _extract_date_near_node(node: Any) -> datetime | None:
@@ -306,6 +394,7 @@ def _items_from_html(
     tree = HTMLParser(html_text)
     base_netloc = urlparse(base_url).netloc
     nav_urls = _nav_urls(tree, base_url)
+    apply_filter = get_settings().pipeline.article_shape_filter
     seen: set[str] = set()
 
     def _collect(nodes: list[Any]) -> list[_DiscoveredItem]:
@@ -322,6 +411,8 @@ def _items_from_html(
             if url in seen:
                 continue
             seen.add(url)
+            if apply_filter and not _looks_like_article(url):
+                continue
             title = node.text(strip=True) or None
             if not title or len(title) < _MIN_TITLE_LEN:
                 continue
@@ -523,17 +614,57 @@ async def _try_sitemap(
     source: SourceEntry,
     cutoff: datetime,
 ) -> list[_DiscoveredItem]:
-    """Try {domain}/sitemap.xml."""
+    """Probe common sitemap paths; recurse one level into ``<sitemapindex>``.
+
+    Tries each path in ``_SITEMAP_PROBE_PATHS`` in order. When a fetched
+    sitemap is an index, fetches up to ``_MAX_SITEMAP_CHILDREN`` child
+    sitemaps. Returns on the first probe that yields items.
+    """
     assert source.url
     parsed = urlparse(source.url)
-    sitemap_url = f"{parsed.scheme}://{parsed.netloc}/sitemap.xml"
-    text = await _fetch_text(client, sitemap_url)
-    if not text:
-        return []
-    items = _items_from_sitemap(text, source, cutoff)
-    if items:
-        logger.debug("discovered via sitemap", url=sitemap_url, count=len(items))
-    return items
+    base = f"{parsed.scheme}://{parsed.netloc}"
+    seen: set[str] = set()
+
+    for probe_path in _SITEMAP_PROBE_PATHS:
+        sitemap_url = f"{base}{probe_path}"
+        if sitemap_url in seen:
+            continue
+        seen.add(sitemap_url)
+
+        text = await _fetch_text(client, sitemap_url)
+        if not text:
+            continue
+
+        # Branch 1: sitemap index — fetch each child sitemap
+        children = _children_from_sitemap_index(text)
+        if children:
+            collected: list[_DiscoveredItem] = []
+            for child_url in children[:_MAX_SITEMAP_CHILDREN]:
+                if child_url in seen:
+                    continue
+                seen.add(child_url)
+                child_text = await _fetch_text(client, child_url)
+                if not child_text:
+                    continue
+                items = _items_from_sitemap(child_text, source, cutoff)
+                if items:
+                    logger.debug(
+                        "discovered via sitemap-index child",
+                        url=child_url,
+                        count=len(items),
+                    )
+                    collected.extend(items)
+            if collected:
+                return collected
+            continue
+
+        # Branch 2: regular sitemap (<urlset>)
+        items = _items_from_sitemap(text, source, cutoff)
+        if items:
+            logger.debug("discovered via sitemap", url=sitemap_url, count=len(items))
+            return items
+
+    return []
 
 
 def _find_content_nav_urls(
